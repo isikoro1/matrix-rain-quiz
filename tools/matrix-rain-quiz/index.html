@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MATRIX RAIN QUIZ</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <canvas id="rainCanvas" aria-hidden="true"></canvas>
+
+    <main class="shell">
+      <section class="hud" aria-label="Game status">
+        <div>
+          <p class="eyebrow">MATRIX RAIN QUIZ</p>
+          <h1>Decode the falling signal</h1>
+        </div>
+        <div class="meter-grid">
+          <div class="meter">
+            <span>Question</span>
+            <strong id="questionCount">0 / 10</strong>
+          </div>
+          <div class="meter">
+            <span>Time</span>
+            <strong id="timeLeft">60</strong>
+          </div>
+          <div class="meter">
+            <span>Level</span>
+            <strong id="difficultyLabel">Ready</strong>
+          </div>
+          <div class="meter">
+            <span>Multiplier</span>
+            <strong id="multiplier">x0</strong>
+          </div>
+          <div class="meter">
+            <span>Score</span>
+            <strong id="score">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="play-panel" aria-label="Quiz">
+        <div class="hint-frame">
+          <div class="scanline"></div>
+          <p class="hint-label">Current hint</p>
+          <pre id="hintText" class="hint-text">Press Start</pre>
+        </div>
+
+        <form id="answerForm" class="answer-row">
+          <label for="answerInput">Answer</label>
+          <input id="answerInput" autocomplete="off" spellcheck="false" placeholder="TYPE THE WORD">
+          <button id="answerButton" type="submit">Answer</button>
+        </form>
+
+        <p id="message" class="message" role="status">Start the quiz to generate the first signal.</p>
+
+        <div class="controls">
+          <button id="startButton" type="button">Start</button>
+          <button id="restartButton" type="button">Restart</button>
+          <button id="shareButton" type="button" disabled>Share on X</button>
+        </div>
+      </section>
+
+      <section class="ranking" aria-label="Local ranking">
+        <h2>Local Ranking</h2>
+        <ol id="rankingList">
+          <li>No results yet</li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="src/utils.js"></script>
+    <script src="src/scoring.js"></script>
+    <script src="src/quiz-generator.js"></script>
+    <script src="src/game-state.js"></script>
+    <script src="src/rain-engine.js"></script>
+    <script src="src/renderer.js"></script>
+    <script src="src/share.js"></script>
+    <script src="src/storage.js"></script>
+    <script src="src/main.js"></script>
+  </body>
+</html>
