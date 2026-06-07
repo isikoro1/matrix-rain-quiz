@@ -28,7 +28,7 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 
 - Opening `index.html` starts the app.
 - Start button begins the 10-question quiz.
-- Timer, difficulty, multiplier, hint, and rain speed change over time.
+- Timer, difficulty, multiplier, signal display, and rain speed change over time.
 - Input and Enter submission work.
 - Correct, incorrect, timeout, and final result flows work.
 - X share button works after finishing.

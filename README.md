@@ -1,10 +1,10 @@
 # MATRIX RAIN QUIZ
 
-MATRIX RAIN QUIZ is a small browser game that combines a Matrix-style digital rain canvas with a timed word-decoding quiz. Each round asks the player to identify a random 5-8 character uppercase alphanumeric answer from a falling signal hint.
+MATRIX RAIN QUIZ is a small browser game that combines a Matrix-style digital rain canvas with a timed word-decoding quiz. Each round asks the player to identify a random 5-8 character uppercase alphanumeric answer embedded in the rain.
 
 ## How to Play
 
-Open `index.html` in a browser, press Start, type the decoded answer, and submit with Enter or the Answer button. The game has 10 questions. Each question starts with 60 seconds.
+Open `index.html` in a browser, press Start, wait for the countdown, type the decoded answer, and submit with Enter or the Answer button. The game has 10 questions. Each question starts with 60 seconds.
 
 ## Tech Stack
 
@@ -21,7 +21,8 @@ No external library is required.
 - 10-question timed quiz
 - Difficulty changes every 20 seconds
 - Matrix-style digital rain background
-- Hint text shown in hard, medium, and easy forms
+- Title, countdown, game, and result screens
+- Signal text rendered inside the digital rain without a separate clue panel
 - Score based on remaining seconds and difficulty multiplier
 - X share intent after the game finishes
 - Local top-5 ranking saved in localStorage
@@ -36,7 +37,6 @@ No external library is required.
 
 ## Future Improvements
 
-- Harder quizzes where the question text itself is hidden in the digital rain
 - Online ranking with Supabase or a similar backend
 - Question genre selection
 - Difficulty selection
@@ -48,13 +48,13 @@ No external library is required.
 ## Manual Verification
 
 - Open `index.html`.
-- Press Start and confirm the 10-question quiz begins.
+- Press Start and confirm the countdown appears before the 10-question quiz begins.
 - Confirm each question has a 60-second timer.
-- Confirm difficulty, multiplier, hint text, and rain speed change every 20 seconds.
+- Confirm difficulty, multiplier, signal display, and rain speed change every 20 seconds.
 - Submit an answer with the input button and the Enter key.
 - Confirm a correct answer adds score and advances to the next question.
 - Confirm incorrect answers keep the current question active.
 - Confirm timeout advances to the next question with 0 points.
-- Confirm the final score appears after 10 questions.
+- Confirm the result screen appears after 10 questions.
 - Confirm the X share button opens a share URL.
 - Confirm the localStorage ranking shows the top 5 scores.

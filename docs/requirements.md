@@ -20,7 +20,7 @@ MATRIX RAIN QUIZ is a static browser quiz game. It uses Matrix-style digital rai
 
 Difficulty becomes easier every 20 seconds within a question.
 
-| Time left | Difficulty | Hint | Multiplier | Rain speed |
+| Time left | Difficulty | Rain signal | Multiplier | Rain speed |
 | --- | --- | --- | --- | --- |
 | 60-41 | Hard | Multiple shuffled variants | 3 | Fast |
 | 40-21 | Medium | Reversed answer | 2 | Normal |
@@ -38,22 +38,12 @@ Examples:
 - 33 seconds left on medium: 33 * 2 = 66 points
 - 12 seconds left on easy: 12 * 1 = 12 points
 
-## UI
+## UI Flow
 
-- Title: MATRIX RAIN QUIZ
-- Canvas background
-- Current question count
-- Remaining time
-- Current difficulty
-- Current multiplier
-- Current score
-- Answer input
-- Answer button
-- Start button
-- Restart button
-- Correct, incorrect, timeout, and finished messages
-- X share button
-- Local ranking
+- Title screen: title, Start button, and canvas background.
+- Countdown screen: short countdown before play begins.
+- Game screen: digital rain, remaining time, current question count, score, difficulty, multiplier, answer input, answer button, and feedback messages.
+- Result screen: final score, local ranking registration/loading, X share button, Title button, and Again button.
 
 ## Future Scope
 
@@ -64,4 +54,3 @@ Examples:
 - Sound effects
 - Consecutive-correct bonus
 - Typing speed evaluation
-

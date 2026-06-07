@@ -32,7 +32,7 @@ function createQuestion() {
   const answer = randomToken(randomInt(5, 8));
   return {
     answer,
-    hints: {
+    signals: {
       hard: noisyScrambles(answer),
       medium: answer.split("").reverse().join(""),
       easy: answer,

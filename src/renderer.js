@@ -17,11 +17,14 @@ function render(state, ranking, elements) {
   elements.difficultyLabel.textContent = difficulty?.label ?? (state.isFinished ? "Finished" : "Ready");
   elements.multiplier.textContent = difficulty ? `x${difficulty.multiplier}` : "x0";
   elements.score.textContent = String(state.totalScore);
-  elements.hintText.textContent = question && difficulty ? question.hints[difficulty.key] : "Press Start";
+  elements.signalMode.textContent = question && difficulty
+    ? `${difficulty.label} signal / x${difficulty.multiplier}`
+    : "Find the signal in the rain";
 
   elements.answerInput.disabled = !state.isPlaying;
   elements.answerButton.disabled = !state.isPlaying;
-  elements.startButton.disabled = state.isPlaying;
+  elements.finalScore.textContent = String(state.totalScore);
+  elements.finalCleared.textContent = `${state.clearedQuestions} / ${QUESTION_COUNT} cleared`;
   elements.shareButton.disabled = !state.isFinished;
 
   elements.rankingList.innerHTML = "";
@@ -44,8 +47,23 @@ function setMessage(elements, message, tone = "") {
   elements.message.className = `message ${tone}`.trim();
 }
 
+function showScreen(elements, name) {
+  const screenMap = {
+    title: elements.titleScreen,
+    countdown: elements.countdownScreen,
+    game: elements.gameScreen,
+    result: elements.resultScreen,
+  };
+
+  Object.values(screenMap).forEach((screen) => {
+    screen.classList.remove("is-active");
+  });
+  screenMap[name].classList.add("is-active");
+}
+
 Object.assign(window.MatrixRainQuiz, {
   render,
   setMessage,
+  showScreen,
 });
 })();

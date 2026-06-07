@@ -37,7 +37,32 @@ function createRainEngine(canvas) {
     state.speedScale = value;
   }
 
-  function draw(highlight = "") {
+  function drawSignal(signal) {
+    if (!signal) {
+      return;
+    }
+
+    const lines = String(signal).split("\n");
+    const fontSize = Math.max(36, Math.min(72, state.width / 7.5));
+    const top = state.height * 0.36 - ((lines.length - 1) * fontSize * 0.42);
+
+    context.save();
+    context.textAlign = "center";
+    context.font = `900 ${fontSize}px Consolas, monospace`;
+    context.shadowColor = "rgba(64, 255, 122, 0.9)";
+    context.shadowBlur = 24;
+
+    lines.forEach((line, index) => {
+      const y = top + index * fontSize * 0.78;
+      context.globalAlpha = index === 0 ? 0.92 : 0.62;
+      context.fillStyle = "#a9ffc1";
+      context.fillText(line, state.width / 2, y);
+    });
+
+    context.restore();
+  }
+
+  function draw(signal = "") {
     context.fillStyle = "rgba(1, 3, 2, 0.18)";
     context.fillRect(0, 0, state.width, state.height);
     context.font = `${state.fontSize}px Consolas, monospace`;
@@ -54,15 +79,7 @@ function createRainEngine(canvas) {
       }
     }
 
-    if (highlight) {
-      context.save();
-      context.globalAlpha = 0.16;
-      context.fillStyle = "#b8ffd0";
-      context.font = "700 48px Consolas, monospace";
-      context.textAlign = "center";
-      context.fillText(highlight, state.width / 2, state.height * 0.52);
-      context.restore();
-    }
+    drawSignal(signal);
   }
 
   resize();

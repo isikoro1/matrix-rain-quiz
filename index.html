@@ -9,13 +9,22 @@
   <body>
     <canvas id="rainCanvas" aria-hidden="true"></canvas>
 
-    <main class="shell">
-      <section class="hud" aria-label="Game status">
-        <div>
-          <p class="eyebrow">MATRIX RAIN QUIZ</p>
-          <h1>Decode the falling signal</h1>
+    <main class="app">
+      <section id="titleScreen" class="screen title-screen is-active" aria-label="Title">
+        <div class="title-copy">
+          <p class="eyebrow">Digital Rain Decode</p>
+          <h1>MATRIX RAIN QUIZ</h1>
         </div>
-        <div class="meter-grid">
+        <button id="startButton" class="primary-action" type="button">Start</button>
+      </section>
+
+      <section id="countdownScreen" class="screen countdown-screen" aria-label="Countdown">
+        <p class="eyebrow">Prepare</p>
+        <div id="countdownNumber" class="countdown-number">3</div>
+      </section>
+
+      <section id="gameScreen" class="screen game-screen" aria-label="Game">
+        <div class="game-hud">
           <div class="meter">
             <span>Question</span>
             <strong id="questionCount">0 / 10</strong>
@@ -25,6 +34,10 @@
             <strong id="timeLeft">60</strong>
           </div>
           <div class="meter">
+            <span>Score</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="meter">
             <span>Level</span>
             <strong id="difficultyLabel">Ready</strong>
           </div>
@@ -32,40 +45,40 @@
             <span>Multiplier</span>
             <strong id="multiplier">x0</strong>
           </div>
-          <div class="meter">
-            <span>Score</span>
-            <strong id="score">0</strong>
-          </div>
         </div>
-      </section>
 
-      <section class="play-panel" aria-label="Quiz">
-        <div class="hint-frame">
-          <div class="scanline"></div>
-          <p class="hint-label">Current hint</p>
-          <pre id="hintText" class="hint-text">Press Start</pre>
+        <div class="signal-readout">
+          <span id="signalMode">Find the signal in the rain</span>
         </div>
 
         <form id="answerForm" class="answer-row">
           <label for="answerInput">Answer</label>
-          <input id="answerInput" autocomplete="off" spellcheck="false" placeholder="TYPE THE WORD">
+          <input id="answerInput" autocomplete="off" spellcheck="false" placeholder="TYPE ANSWER">
           <button id="answerButton" type="submit">Answer</button>
         </form>
 
-        <p id="message" class="message" role="status">Start the quiz to generate the first signal.</p>
-
-        <div class="controls">
-          <button id="startButton" type="button">Start</button>
-          <button id="restartButton" type="button">Restart</button>
-          <button id="shareButton" type="button" disabled>Share on X</button>
-        </div>
+        <p id="message" class="message" role="status"></p>
       </section>
 
-      <section class="ranking" aria-label="Local ranking">
-        <h2>Local Ranking</h2>
-        <ol id="rankingList">
-          <li>No results yet</li>
-        </ol>
+      <section id="resultScreen" class="screen result-screen" aria-label="Result">
+        <div class="result-summary">
+          <p class="eyebrow">Result</p>
+          <h2>Score <span id="finalScore">0</span></h2>
+          <p id="finalCleared">0 / 10 cleared</p>
+        </div>
+
+        <section class="ranking" aria-label="Local ranking">
+          <h3>Local Ranking</h3>
+          <ol id="rankingList">
+            <li>No results yet</li>
+          </ol>
+        </section>
+
+        <div class="result-actions">
+          <button id="shareButton" type="button">Share on X</button>
+          <button id="retryButton" type="button">Again</button>
+          <button id="titleButton" type="button">Title</button>
+        </div>
       </section>
     </main>
 

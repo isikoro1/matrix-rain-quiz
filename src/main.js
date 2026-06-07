@@ -12,32 +12,43 @@ const {
   render,
   saveResult,
   setMessage,
+  showScreen,
   startGame,
 } = window.MatrixRainQuiz;
 
 const elements = {
   canvas: document.querySelector("#rainCanvas"),
+  titleScreen: document.querySelector("#titleScreen"),
+  countdownScreen: document.querySelector("#countdownScreen"),
+  gameScreen: document.querySelector("#gameScreen"),
+  resultScreen: document.querySelector("#resultScreen"),
+  countdownNumber: document.querySelector("#countdownNumber"),
   questionCount: document.querySelector("#questionCount"),
   timeLeft: document.querySelector("#timeLeft"),
   difficultyLabel: document.querySelector("#difficultyLabel"),
   multiplier: document.querySelector("#multiplier"),
   score: document.querySelector("#score"),
-  hintText: document.querySelector("#hintText"),
+  signalMode: document.querySelector("#signalMode"),
   answerForm: document.querySelector("#answerForm"),
   answerInput: document.querySelector("#answerInput"),
   answerButton: document.querySelector("#answerButton"),
   message: document.querySelector("#message"),
   startButton: document.querySelector("#startButton"),
-  restartButton: document.querySelector("#restartButton"),
+  retryButton: document.querySelector("#retryButton"),
+  titleButton: document.querySelector("#titleButton"),
   shareButton: document.querySelector("#shareButton"),
+  finalScore: document.querySelector("#finalScore"),
+  finalCleared: document.querySelector("#finalCleared"),
   rankingList: document.querySelector("#rankingList"),
 };
 
 const state = createInitialState();
 const rain = createRainEngine(elements.canvas);
-let ranking = loadRanking();
+let ranking = [];
 let timerId = null;
+let countdownId = null;
 let lastFrame = 0;
+let activeScreen = "title";
 
 function stopTimer() {
   if (timerId) {
@@ -46,17 +57,44 @@ function stopTimer() {
   }
 }
 
+function stopCountdown() {
+  if (countdownId) {
+    window.clearInterval(countdownId);
+    countdownId = null;
+  }
+}
+
+function switchScreen(name) {
+  activeScreen = name;
+  showScreen(elements, name);
+}
+
+function currentSignal() {
+  if (!state.isPlaying) {
+    return "";
+  }
+
+  const question = currentQuestion(state);
+  if (!question) {
+    return "";
+  }
+
+  const difficulty = getDifficulty(state.remainingSeconds);
+  return question.signals[difficulty.key];
+}
+
 function finishGame() {
   stopTimer();
   state.isPlaying = false;
   state.isFinished = true;
-  ranking = saveResult({
+  saveResult({
     score: state.totalScore,
     clearedQuestions: state.clearedQuestions,
     createdAt: new Date().toISOString(),
   });
-  setMessage(elements, `Finished. Total score: ${state.totalScore}`, "warn");
+  ranking = loadRanking();
   render(state, ranking, elements);
+  switchScreen("result");
 }
 
 function nextQuestion(message, tone = "") {
@@ -65,6 +103,7 @@ function nextQuestion(message, tone = "") {
     finishGame();
     return;
   }
+
   elements.answerInput.value = "";
   elements.answerInput.focus();
   setMessage(elements, message, tone);
@@ -72,8 +111,7 @@ function nextQuestion(message, tone = "") {
 }
 
 function handleTimeout() {
-  const answer = state.currentAnswer;
-  nextQuestion(`Time up. Answer was ${answer}.`, "warn");
+  nextQuestion("Time up. Next signal.", "warn");
 }
 
 function tick() {
@@ -94,12 +132,49 @@ function tick() {
 
 function beginGame() {
   stopTimer();
+  stopCountdown();
   startGame(state);
-  setMessage(elements, "Question generated. Decode the signal.");
+  ranking = [];
+  switchScreen("game");
+  setMessage(elements, "Decode the signal.");
   render(state, ranking, elements);
   elements.answerInput.value = "";
   elements.answerInput.focus();
   timerId = window.setInterval(tick, 1000);
+}
+
+function startCountdown() {
+  stopTimer();
+  stopCountdown();
+  state.isPlaying = false;
+  state.isFinished = false;
+  switchScreen("countdown");
+
+  let value = 3;
+  elements.countdownNumber.textContent = String(value);
+  countdownId = window.setInterval(() => {
+    value -= 1;
+    if (value > 0) {
+      elements.countdownNumber.textContent = String(value);
+      return;
+    }
+
+    if (value === 0) {
+      elements.countdownNumber.textContent = "GO";
+      return;
+    }
+
+    beginGame();
+  }, 850);
+}
+
+function goTitle() {
+  stopTimer();
+  stopCountdown();
+  state.isPlaying = false;
+  state.isFinished = false;
+  state.remainingSeconds = 60;
+  switchScreen("title");
 }
 
 function submitAnswer(event) {
@@ -125,24 +200,27 @@ function submitAnswer(event) {
   }
 
   elements.answerInput.select();
-  setMessage(elements, "Incorrect. Keep decoding.", "bad");
+  setMessage(elements, "Incorrect.", "bad");
 }
 
 function animate(time) {
   if (time - lastFrame > 32) {
     const difficulty = state.isPlaying ? getDifficulty(state.remainingSeconds) : null;
-    rain.setSpeedScale(difficulty?.rainSpeed ?? 0.9);
-    rain.draw(state.isPlaying ? state.currentAnswer : "");
+    const idleSpeed = activeScreen === "title" || activeScreen === "countdown" ? 0.82 : 0.95;
+    rain.setSpeedScale(difficulty?.rainSpeed ?? idleSpeed);
+    rain.draw(currentSignal());
     lastFrame = time;
   }
   window.requestAnimationFrame(animate);
 }
 
-elements.startButton.addEventListener("click", beginGame);
-elements.restartButton.addEventListener("click", beginGame);
+elements.startButton.addEventListener("click", startCountdown);
+elements.retryButton.addEventListener("click", startCountdown);
+elements.titleButton.addEventListener("click", goTitle);
 elements.answerForm.addEventListener("submit", submitAnswer);
 elements.shareButton.addEventListener("click", () => openXShare(state.totalScore));
 
 render(state, ranking, elements);
+switchScreen("title");
 window.requestAnimationFrame(animate);
 })();

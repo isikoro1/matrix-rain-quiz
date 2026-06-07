@@ -28,10 +28,10 @@ matrix-rain-quiz/
 
 - `main.js`: DOM wiring, event listeners, game start, answer handling, timer, render loop
 - `game-state.js`: question index, answer, timer value, score, play state
-- `quiz-generator.js`: answer generation and hint generation
+- `quiz-generator.js`: answer generation and signal variant generation
 - `scoring.js`: difficulty selection, multiplier, score calculation
 - `rain-engine.js`: canvas state, columns, glyph updates, speed scaling
-- `renderer.js`: DOM updates and local ranking rendering
+- `renderer.js`: screen switching, DOM updates, and result ranking rendering
 - `share.js`: X share URL generation and `window.open`
 - `storage.js`: localStorage save/load and top-5 ranking
 - `utils.js`: random helpers, shuffle, clamp, answer normalization
@@ -39,13 +39,14 @@ matrix-rain-quiz/
 ## Game State Flow
 
 1. Initial state renders the start screen.
-2. Start creates 10 questions and enables input.
-3. A one-second interval decrements the active question timer.
-4. The current difficulty is derived from remaining seconds.
-5. Correct answers calculate score, update totals, and advance.
-6. Incorrect answers show a message and keep the same question.
-7. Timeout advances with no score.
-8. After question 10, the result is saved to localStorage and shown.
+2. Start shows a countdown.
+3. After countdown, the game creates 10 questions and enables input.
+4. A one-second interval decrements the active question timer.
+5. The current difficulty is derived from remaining seconds.
+6. Correct answers calculate score, update totals, and advance.
+7. Incorrect answers show a message and keep the same question.
+8. Timeout advances with no score.
+9. After question 10, the result screen saves to localStorage, loads ranking, and shows share/retry/title actions.
 
 ## Timer
 
@@ -53,7 +54,7 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 ## Canvas Rendering
 
-The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain random glyphs and fall at speeds scaled by the current difficulty. The current answer is drawn faintly in the background so the hint feels blended into the rain without making the game unreadable.
+The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain random glyphs and fall at speeds scaled by the current difficulty. The current signal is drawn directly in the rain without a separate clue panel.
 
 ## Script Loading
 
