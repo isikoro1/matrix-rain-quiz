@@ -262,21 +262,123 @@ input:disabled {
 
 @media (max-width: 860px) {
   .shell {
+    width: min(100% - 16px, 560px);
     grid-template-columns: 1fr;
     align-content: start;
+    gap: 10px;
+    padding: 10px 0 16px;
   }
 
   .hud {
     display: block;
+    padding: 14px;
   }
 
   .meter-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 18px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 12px;
+    min-width: 0;
   }
 
-  .answer-row,
+  h1 {
+    font-size: clamp(1.75rem, 8.5vw, 2.6rem);
+    line-height: 0.98;
+  }
+
+  .eyebrow {
+    margin-bottom: 4px;
+    font-size: 0.68rem;
+  }
+
+  .meter {
+    min-height: 52px;
+    padding: 7px;
+  }
+
+  .meter span {
+    overflow: hidden;
+    font-size: 0.56rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .meter strong {
+    margin-top: 4px;
+    font-size: clamp(0.92rem, 4.2vw, 1.15rem);
+  }
+
+  .play-panel,
+  .ranking {
+    padding: 10px;
+  }
+
+  .hint-frame {
+    min-height: 168px;
+    margin-bottom: 10px;
+    padding: 14px;
+  }
+
+  .hint-label {
+    margin-bottom: 8px;
+    font-size: 0.68rem;
+  }
+
+  .hint-text {
+    min-height: 96px;
+    font-size: clamp(1.85rem, 9.2vw, 3rem);
+  }
+
+  .answer-row {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 8px;
+  }
+
+  .answer-row label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .answer-row input,
+  button {
+    min-height: 40px;
+    height: 40px;
+  }
+
+  .message {
+    min-height: 22px;
+    margin: 8px 0;
+    font-size: 0.88rem;
+  }
+
   .controls {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hud {
+    padding: 12px;
+  }
+
+  .meter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .meter:last-child {
+    grid-column: span 2;
+  }
+
+  .controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .controls button {
+    padding: 0 6px;
+    font-size: 0.78rem;
   }
 }
