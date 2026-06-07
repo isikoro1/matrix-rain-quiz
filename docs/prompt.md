@@ -1,6 +1,6 @@
 # Prompt
 
-The original request asked for a new static frontend app named `MATRIX RAIN QUIZ` under `tools/matrix-rain-quiz`, while keeping any existing `tools/matrix-rain-simulator` app untouched.
+The original request asked for a new static frontend app named `MATRIX RAIN QUIZ`.
 
 ## Requested MVP
 
@@ -26,7 +26,7 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 
 ## Acceptance
 
-- Opening `matrix-rain-quiz/index.html` starts the app.
+- Opening `index.html` starts the app.
 - Start button begins the 10-question quiz.
 - Timer, difficulty, multiplier, hint, and rain speed change over time.
 - Input and Enter submission work.
@@ -34,4 +34,3 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 - X share button works after finishing.
 - localStorage ranking shows top 5 results.
 - Existing `matrix-rain-simulator` is not changed.
-

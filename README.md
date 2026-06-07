@@ -47,7 +47,7 @@ No external library is required.
 
 ## Manual Verification
 
-- Open `tools/matrix-rain-quiz/index.html`.
+- Open `index.html`.
 - Press Start and confirm the 10-question quiz begins.
 - Confirm each question has a 60-second timer.
 - Confirm difficulty, multiplier, hint text, and rain speed change every 20 seconds.
