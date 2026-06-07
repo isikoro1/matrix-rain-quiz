@@ -1,6 +1,6 @@
 # MATRIX RAIN QUIZ
 
-MATRIX RAIN QUIZ is a small browser game that combines a Matrix-style digital rain canvas with a timed word-decoding quiz. Each round asks the player to identify a random 5-8 character uppercase alphanumeric answer embedded in the rain.
+MATRIX RAIN QUIZ is a small browser game that combines a Matrix-style digital rain canvas with a timed word-decoding quiz. Each round asks the player to read a meaningful katakana word falling through the rain.
 
 ## How to Play
 
@@ -22,8 +22,10 @@ No external library is required.
 - Difficulty changes every 20 seconds
 - Matrix-style digital rain background
 - Title, countdown, game, and result screens
-- Signal text rendered inside the digital rain without a separate clue panel
-- Score based on remaining seconds and difficulty multiplier
+- Katakana-only word mode
+- Word length starts at 3 characters and increases after correct answers
+- Falling words rendered inside the digital rain without a separate clue panel
+- Score based on word length, remaining seconds, and difficulty multiplier
 - X share intent after the game finishes
 - Local top-5 ranking saved in localStorage
 
@@ -31,13 +33,15 @@ No external library is required.
 
 - Canvas drawing and game state management are separated.
 - Difficulty changes at 60-41, 40-21, and 20-0 seconds.
-- Score uses `Math.floor(remainingSeconds * difficultyMultiplier)`.
+- Score uses `Math.floor(wordLength + remainingSeconds * difficultyMultiplier)`.
+- Difficulty multipliers are Hard `1.5`, Normal `1`, and Easy `0.8`.
 - Ranking data is stored locally only.
 - The app is static and can run by opening `index.html`.
 
 ## Future Improvements
 
 - Online ranking with Supabase or a similar backend
+- English word mode
 - Question genre selection
 - Difficulty selection
 - Mobile control improvements
@@ -50,9 +54,10 @@ No external library is required.
 - Open `index.html`.
 - Press Start and confirm the countdown appears before the 10-question quiz begins.
 - Confirm each question has a 60-second timer.
-- Confirm difficulty, multiplier, signal display, and rain speed change every 20 seconds.
+- Confirm difficulty, multiplier, falling word display, and rain speed change every 20 seconds.
 - Submit an answer with the input button and the Enter key.
 - Confirm a correct answer adds score and advances to the next question.
+- Confirm answer length increases after correct answers.
 - Confirm incorrect answers keep the current question active.
 - Confirm timeout advances to the next question with 0 points.
 - Confirm the result screen appears after 10 questions.

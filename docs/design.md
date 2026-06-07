@@ -28,7 +28,7 @@ matrix-rain-quiz/
 
 - `main.js`: DOM wiring, event listeners, game start, answer handling, timer, render loop
 - `game-state.js`: question index, answer, timer value, score, play state
-- `quiz-generator.js`: answer generation and signal variant generation
+- `quiz-generator.js`: katakana word selection by current answer length
 - `scoring.js`: difficulty selection, multiplier, score calculation
 - `rain-engine.js`: canvas state, columns, glyph updates, speed scaling
 - `renderer.js`: screen switching, DOM updates, and result ranking rendering
@@ -43,7 +43,7 @@ matrix-rain-quiz/
 3. After countdown, the game creates 10 questions and enables input.
 4. A one-second interval decrements the active question timer.
 5. The current difficulty is derived from remaining seconds.
-6. Correct answers calculate score, update totals, and advance.
+6. Correct answers calculate score, increase the next answer length, update totals, and advance.
 7. Incorrect answers show a message and keep the same question.
 8. Timeout advances with no score.
 9. After question 10, the result screen saves to localStorage, loads ranking, and shows share/retry/title actions.
@@ -54,7 +54,7 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 ## Canvas Rendering
 
-The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain random glyphs and fall at speeds scaled by the current difficulty. The current signal is drawn directly in the rain without a separate clue panel.
+The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain spaced katakana glyphs and fall at speeds scaled by the current difficulty. The current answer appears as falling katakana words mixed into the rain, without a fixed center display.
 
 ## Script Loading
 

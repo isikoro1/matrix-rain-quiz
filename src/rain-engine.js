@@ -1,17 +1,92 @@
 (() => {
 const { randomInt } = window.MatrixRainQuiz;
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const GLYPHS = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン";
+const DECOY_WORDS = [
+  "サクラ",
+  "メロン",
+  "テレビ",
+  "カメラ",
+  "パソコン",
+  "リモコン",
+  "カラオケ",
+  "レストラン",
+  "カレンダー",
+  "オムライス",
+  "コンサート",
+  "サイクリング",
+  "エスカレーター",
+  "デジタルカメラ",
+];
 
 function createRainEngine(canvas) {
   const context = canvas.getContext("2d");
   const state = {
     columns: [],
-    fontSize: 18,
+    wordDrops: [],
+    fontSize: 20,
+    columnWidth: 30,
     speedScale: 1,
     width: 0,
     height: 0,
+    target: "",
   };
+
+  function resetColumns() {
+    const count = Math.ceil(state.width / state.columnWidth);
+    state.columns = Array.from({ length: count }, (_, index) => ({
+      x: index * state.columnWidth + randomInt(0, 6),
+      y: randomInt(-state.height, state.height),
+      speed: randomInt(5, 14),
+      gap: randomInt(22, 30),
+    }));
+  }
+
+  function wordWidth(word, fontSize) {
+    return word.length * fontSize * 0.82;
+  }
+
+  function pickDecoy(target) {
+    let word = DECOY_WORDS[randomInt(0, DECOY_WORDS.length - 1)];
+    let attempts = 0;
+    while (word === target && attempts < 8) {
+      word = DECOY_WORDS[randomInt(0, DECOY_WORDS.length - 1)];
+      attempts += 1;
+    }
+    return word;
+  }
+
+  function spawnWord(target, forceTarget = false) {
+    if (!target) {
+      return;
+    }
+
+    const isTarget = forceTarget || Math.random() > 0.58;
+    const word = isTarget ? target : pickDecoy(target);
+    const fontSize = isTarget ? 28 : 22;
+    const width = wordWidth(word, fontSize);
+    const maxX = Math.max(8, state.width - width - 8);
+
+    state.wordDrops.push({
+      word,
+      isTarget,
+      x: randomInt(8, maxX),
+      y: randomInt(-state.height, -fontSize),
+      speed: randomInt(18, 34),
+      fontSize,
+      alpha: isTarget ? 0.92 : 0.38,
+    });
+  }
+
+  function resetWords(target) {
+    state.wordDrops = [];
+    state.target = target;
+    if (target) {
+      spawnWord(target, true);
+      spawnWord(target, true);
+      spawnWord(target, false);
+    }
+  }
 
   function resize() {
     const ratio = window.devicePixelRatio || 1;
@@ -24,48 +99,18 @@ function createRainEngine(canvas) {
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     state.width = width;
     state.height = height;
-
-    const count = Math.ceil(width / state.fontSize);
-    state.columns = Array.from({ length: count }, (_, index) => ({
-      x: index * state.fontSize,
-      y: randomInt(-height, height),
-      speed: randomInt(5, 16),
-    }));
+    state.fontSize = width < 480 ? 18 : 20;
+    state.columnWidth = width < 480 ? 32 : 34;
+    resetColumns();
+    resetWords(state.target);
   }
 
   function setSpeedScale(value) {
     state.speedScale = value;
   }
 
-  function drawSignal(signal) {
-    if (!signal) {
-      return;
-    }
-
-    const lines = String(signal).split("\n");
-    const fontSize = Math.max(36, Math.min(72, state.width / 7.5));
-    const top = state.height * 0.36 - ((lines.length - 1) * fontSize * 0.42);
-
-    context.save();
-    context.textAlign = "center";
-    context.font = `900 ${fontSize}px Consolas, monospace`;
-    context.shadowColor = "rgba(64, 255, 122, 0.9)";
-    context.shadowBlur = 24;
-
-    lines.forEach((line, index) => {
-      const y = top + index * fontSize * 0.78;
-      context.globalAlpha = index === 0 ? 0.92 : 0.62;
-      context.fillStyle = "#a9ffc1";
-      context.fillText(line, state.width / 2, y);
-    });
-
-    context.restore();
-  }
-
-  function draw(signal = "") {
-    context.fillStyle = "rgba(1, 3, 2, 0.18)";
-    context.fillRect(0, 0, state.width, state.height);
-    context.font = `${state.fontSize}px Consolas, monospace`;
+  function drawGlyphRain() {
+    context.font = `${state.fontSize}px "Yu Gothic", "Meiryo", sans-serif`;
 
     for (const column of state.columns) {
       const glyph = GLYPHS[randomInt(0, GLYPHS.length - 1)];
@@ -74,12 +119,48 @@ function createRainEngine(canvas) {
 
       column.y += column.speed * state.speedScale;
       if (column.y > state.height + state.fontSize) {
-        column.y = randomInt(-220, -state.fontSize);
-        column.speed = randomInt(5, 16);
+        column.y = randomInt(-240, -state.fontSize);
+        column.speed = randomInt(5, 14);
+        column.gap = randomInt(22, 30);
       }
     }
+  }
 
-    drawSignal(signal);
+  function drawWords(target) {
+    if (target !== state.target) {
+      resetWords(target);
+    }
+
+    if (!target) {
+      return;
+    }
+
+    const targetCount = state.wordDrops.filter((drop) => drop.isTarget).length;
+    if (targetCount < 2 || Math.random() > 0.965) {
+      spawnWord(target, targetCount < 2);
+    }
+
+    context.save();
+    context.textBaseline = "top";
+    for (const drop of state.wordDrops) {
+      context.globalAlpha = drop.alpha;
+      context.fillStyle = drop.isTarget ? "#d8ffe1" : "#2ed965";
+      context.font = `900 ${drop.fontSize}px "Yu Gothic", "Meiryo", sans-serif`;
+      context.shadowColor = drop.isTarget ? "rgba(64, 255, 122, 0.88)" : "rgba(64, 255, 122, 0.32)";
+      context.shadowBlur = drop.isTarget ? 16 : 6;
+      context.fillText(drop.word, drop.x, drop.y);
+      drop.y += drop.speed * state.speedScale;
+    }
+    context.restore();
+
+    state.wordDrops = state.wordDrops.filter((drop) => drop.y < state.height + drop.fontSize);
+  }
+
+  function draw(target = "") {
+    context.fillStyle = "rgba(1, 3, 2, 0.18)";
+    context.fillRect(0, 0, state.width, state.height);
+    drawGlyphRain();
+    drawWords(target);
   }
 
   resize();

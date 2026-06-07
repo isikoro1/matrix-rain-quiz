@@ -1,5 +1,5 @@
 (() => {
-const { createQuestions } = window.MatrixRainQuiz;
+const { createQuestion, createQuestions } = window.MatrixRainQuiz;
 
 const QUESTION_COUNT = 10;
 const QUESTION_SECONDS = 60;
@@ -43,6 +43,7 @@ function advanceQuestion(state) {
     return;
   }
 
+  state.questions[state.currentQuestionIndex] = createQuestion(state.clearedQuestions);
   state.currentAnswer = state.questions[state.currentQuestionIndex].answer;
   state.remainingSeconds = QUESTION_SECONDS;
 }

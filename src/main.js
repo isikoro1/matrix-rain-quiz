@@ -79,8 +79,7 @@ function currentSignal() {
     return "";
   }
 
-  const difficulty = getDifficulty(state.remainingSeconds);
-  return question.signals[difficulty.key];
+  return question.answer;
 }
 
 function finishGame() {
@@ -191,7 +190,7 @@ function submitAnswer(event) {
 
   if (input === normalizeAnswer(question.answer)) {
     const difficulty = getDifficulty(state.remainingSeconds);
-    const gained = calculateScore(state.remainingSeconds, difficulty.multiplier);
+    const gained = calculateScore(state.remainingSeconds, difficulty.multiplier, question.length);
     state.lastScore = gained;
     state.totalScore += gained;
     state.clearedQuestions += 1;

@@ -1,47 +1,35 @@
 (() => {
-const { randomInt, shuffle } = window.MatrixRainQuiz;
+const { randomInt } = window.MatrixRainQuiz;
 
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const DIGITS = "0123456789";
-const SOURCE = `${LETTERS}${DIGITS}`;
+const WORDS_BY_LENGTH = {
+  3: ["サクラ", "メロン", "テレビ", "ラジオ", "カメラ", "バナナ", "ピアノ"],
+  4: ["パソコン", "リモコン", "タクシー", "カラオケ", "コンビニ", "ステーキ"],
+  5: ["レストラン", "プレゼント", "カレンダー", "オムライス", "コンサート", "マヨネーズ", "プリンター"],
+  6: ["ハンバーガー", "サイクリング", "フードコート", "アスパラガス"],
+  7: ["エスカレーター", "デジタルカメラ"],
+  8: ["コーヒーメーカー"],
+  9: ["ジェットコースター", "コミュニケーション", "カタカナタイピング", "マトリックスレイン", "マトリックスクイズ"],
+  10: ["デジタルレインクイズ", "カタカナレインゲーム"],
+  11: ["デジタルカタカナゲーム"],
+  12: ["マトリックスレインゲーム"],
+};
 
-function randomToken(length) {
-  let token = "";
-  for (let i = 0; i < length; i += 1) {
-    token += SOURCE[randomInt(0, SOURCE.length - 1)];
-  }
-  return token;
+function randomWord(length) {
+  const words = WORDS_BY_LENGTH[length] ?? WORDS_BY_LENGTH[3];
+  return words[randomInt(0, words.length - 1)];
 }
 
-function scramble(answer) {
-  const chars = answer.split("");
-  let result = shuffle(chars).join("");
-  let attempts = 0;
-  while (result === answer && attempts < 8) {
-    result = shuffle(chars).join("");
-    attempts += 1;
-  }
-  return result;
-}
-
-function noisyScrambles(answer) {
-  return Array.from({ length: 3 }, () => scramble(answer)).join("\n");
-}
-
-function createQuestion() {
-  const answer = randomToken(randomInt(5, 8));
+function createQuestion(index = 0) {
+  const length = Math.min(12, 3 + index);
+  const answer = randomWord(length);
   return {
     answer,
-    signals: {
-      hard: noisyScrambles(answer),
-      medium: answer.split("").reverse().join(""),
-      easy: answer,
-    },
+    length,
   };
 }
 
 function createQuestions(count = 10) {
-  return Array.from({ length: count }, createQuestion);
+  return Array.from({ length: count }, (_, index) => createQuestion(index));
 }
 
 Object.assign(window.MatrixRainQuiz, {

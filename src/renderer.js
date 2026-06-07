@@ -18,8 +18,8 @@ function render(state, ranking, elements) {
   elements.multiplier.textContent = difficulty ? `x${difficulty.multiplier}` : "x0";
   elements.score.textContent = String(state.totalScore);
   elements.signalMode.textContent = question && difficulty
-    ? `${difficulty.label} signal / x${difficulty.multiplier}`
-    : "Find the signal in the rain";
+    ? `カタカナ / ${question.length}文字 / ${difficulty.label}`
+    : "Falling katakana words";
 
   elements.answerInput.disabled = !state.isPlaying;
   elements.answerButton.disabled = !state.isPlaying;

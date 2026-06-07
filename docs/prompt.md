@@ -9,7 +9,7 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 - Build a Matrix-style digital rain quiz game.
 - Generate 10 questions.
 - Give each question 60 seconds.
-- Generate random uppercase alphanumeric answers of length 5-8.
+- Generate meaningful katakana answers.
 - Let the player answer with Enter or an Answer button.
 - Correct answers add score and advance.
 - Incorrect answers continue the current question.
@@ -20,9 +20,9 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 
 ## Difficulty
 
-- 60-41 seconds: hard, shuffled variants, fast rain, multiplier 3.
-- 40-21 seconds: medium, reversed answer, normal rain, multiplier 2.
-- 20-0 seconds: easy, correct answer, slow rain, multiplier 1.
+- 60-41 seconds: hard, fast rain, score multiplier 1.5.
+- 40-21 seconds: normal, normal rain, score multiplier 1.
+- 20-0 seconds: easy, slow rain, score multiplier 0.8.
 
 ## Acceptance
 
