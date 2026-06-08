@@ -230,9 +230,14 @@ button:focus-visible {
   min-width: 2ch;
   z-index: 1;
   color: var(--green);
-  font-size: clamp(3.4rem, 16vw, 6.2rem);
-  line-height: 0.95;
-  text-shadow: 0 0 28px rgba(64, 255, 122, 0.5);
+  font-size: clamp(3.3rem, 15vw, 5.8rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  line-height: 0.86;
+  text-shadow:
+    0 0 4px rgba(216, 255, 225, 0.82),
+    0 0 14px rgba(64, 255, 122, 0.74),
+    0 0 32px rgba(64, 255, 122, 0.46);
 }
 
 .time-meter {
@@ -241,6 +246,23 @@ button:focus-visible {
 
 .time-value {
   display: block;
+  min-width: 2.42em;
+  padding: 0.06em 0.14em 0.1em;
+  border: 1px solid rgba(64, 255, 122, 0.62);
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(64, 255, 122, 0.08) 0,
+      rgba(64, 255, 122, 0.08) 1px,
+      transparent 1px,
+      transparent 6px
+    ),
+    linear-gradient(180deg, rgba(3, 24, 10, 0.92), rgba(0, 5, 2, 0.96));
+  box-shadow:
+    0 0 0 1px rgba(64, 255, 122, 0.16),
+    0 0 28px rgba(64, 255, 122, 0.2),
+    inset 0 0 20px rgba(64, 255, 122, 0.16);
   text-align: center;
 }
 
@@ -249,10 +271,10 @@ button:focus-visible {
   left: 50%;
   bottom: 0;
   display: grid;
-  grid-template-columns: repeat(2, 0.72em);
-  width: 1.44em;
-  height: 0.95em;
-  font-size: clamp(3.4rem, 16vw, 6.2rem);
+  grid-template-columns: repeat(2, 1.08em);
+  width: 2.16em;
+  height: 1em;
+  font-size: clamp(3.3rem, 15vw, 5.8rem);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -465,11 +487,11 @@ button:focus-visible {
   }
 
   .time-meter strong {
-    font-size: clamp(3rem, 18vw, 5.2rem);
+    font-size: clamp(2.9rem, 17vw, 4.9rem);
   }
 
   .time-flashes {
-    font-size: clamp(3rem, 18vw, 5.2rem);
+    font-size: clamp(2.9rem, 17vw, 4.9rem);
   }
 
   .answer-row {
