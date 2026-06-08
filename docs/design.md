@@ -54,7 +54,7 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 ## Canvas Rendering
 
-The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain spaced katakana glyphs and fall at speeds scaled by the current difficulty. The current answer appears as falling katakana words mixed into the rain, without a fixed center display.
+The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain spaced katakana glyphs and fall at speeds scaled by the current difficulty. The question text is embedded as brighter vertical katakana columns inside the background rain, without a fixed center display or separate word overlay.
 
 ## Script Loading
 
