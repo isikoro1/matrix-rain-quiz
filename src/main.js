@@ -221,7 +221,7 @@ function submitAnswer(event) {
     return;
   }
 
-  nextQuestion("Incorrect. Length down.", "bad", -2);
+  nextQuestion(`Incorrect. Answer: ${question.answer}`, "bad", -2);
 }
 
 function animate(time) {
