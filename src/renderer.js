@@ -1,6 +1,25 @@
 (() => {
 const { currentQuestion, QUESTION_COUNT, getDifficulty, normalizeAnswer } = window.MatrixRainQuiz;
-let lastRenderedTime = null;
+let lastRenderedTimeText = "";
+
+function renderTime(elements, seconds, isPlaying) {
+  const timeText = String(seconds);
+  const previous = lastRenderedTimeText.padStart(timeText.length, " ");
+  const chars = Array.from(timeText);
+
+  elements.timeLeft.innerHTML = "";
+  chars.forEach((char, index) => {
+    const digit = document.createElement("span");
+    digit.className = "time-digit";
+    digit.textContent = char;
+    if (isPlaying && previous[index] !== char) {
+      digit.classList.add("time-tick");
+    }
+    elements.timeLeft.append(digit);
+  });
+
+  lastRenderedTimeText = timeText;
+}
 
 function formatRankingItem(item) {
   const date = new Date(item.createdAt);
@@ -25,16 +44,7 @@ function render(state, ranking, elements) {
   elements.questionCount.textContent = state.isPlaying || state.isFinished
     ? `${Math.min(state.currentQuestionIndex + 1, QUESTION_COUNT)} / ${QUESTION_COUNT}`
     : `0 / ${QUESTION_COUNT}`;
-  const timeText = String(state.remainingSeconds);
-  if (elements.timeLeft.textContent !== timeText) {
-    elements.timeLeft.textContent = timeText;
-  }
-  if (state.isPlaying && lastRenderedTime !== null && lastRenderedTime !== state.remainingSeconds) {
-    elements.timeLeft.classList.remove("time-tick");
-    void elements.timeLeft.offsetWidth;
-    elements.timeLeft.classList.add("time-tick");
-  }
-  lastRenderedTime = state.remainingSeconds;
+  renderTime(elements, state.remainingSeconds, state.isPlaying);
   elements.difficultyLabel.textContent = difficulty?.label ?? (state.isFinished ? "Finished" : "Ready");
   elements.score.textContent = String(state.totalScore);
 

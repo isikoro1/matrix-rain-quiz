@@ -25,7 +25,7 @@ body {
 body {
   overflow-x: hidden;
   background: var(--bg);
-  color: var(--text);
+  color: var(--green-soft);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
@@ -132,7 +132,7 @@ button {
   border: 1px solid rgba(64, 255, 122, 0.58);
   border-radius: 6px;
   background: var(--panel-strong);
-  color: var(--text);
+  color: var(--green-soft);
   cursor: pointer;
   font-weight: 800;
 }
@@ -219,8 +219,10 @@ button:focus-visible {
 .meter strong {
   display: block;
   margin-top: 1px;
+  color: var(--green-soft);
   font-family: Consolas, "Courier New", monospace;
   font-size: clamp(0.78rem, 2.6vw, 1rem);
+  text-shadow: 0 0 10px rgba(64, 255, 122, 0.28);
 }
 
 .time-meter strong {
@@ -232,7 +234,14 @@ button:focus-visible {
   text-shadow: 0 0 28px rgba(64, 255, 122, 0.5);
 }
 
-.time-meter strong.time-tick {
+.time-digit {
+  display: inline-grid;
+  width: 0.72em;
+  min-height: 0.95em;
+  place-items: center;
+}
+
+.time-digit.time-tick {
   animation: timeTypeFlash 180ms steps(2, end);
 }
 
@@ -243,7 +252,7 @@ button:focus-visible {
       0 0 0 5px rgba(64, 255, 122, 0.18),
       0 0 26px rgba(64, 255, 122, 0.7),
       inset 0 0 12px rgba(216, 255, 225, 0.45);
-    color: #f4fff7;
+    color: var(--green-soft);
   }
 
   100% {
@@ -286,7 +295,7 @@ button:focus-visible {
   border: 1px solid rgba(64, 255, 122, 0.58);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.58);
-  color: var(--text);
+  color: var(--green-soft);
   box-shadow: inset 0 0 14px rgba(64, 255, 122, 0.08);
   font: 900 clamp(1.1rem, 4.8vw, 1.65rem) / 1 "Yu Gothic", "Meiryo", sans-serif;
 }
@@ -318,7 +327,9 @@ button:focus-visible {
   min-width: 56px;
   height: 48px;
   padding: 0;
+  color: var(--green);
   font: 900 1.9rem / 1 Consolas, "Courier New", monospace;
+  text-shadow: 0 0 12px rgba(64, 255, 122, 0.54);
 }
 
 .message {
@@ -339,7 +350,7 @@ button:focus-visible {
 }
 
 .score-line strong {
-  color: var(--text);
+  color: var(--green-soft);
   font-family: Consolas, "Courier New", monospace;
   font-size: 1rem;
 }
@@ -392,7 +403,7 @@ button:focus-visible {
 }
 
 .ranking strong {
-  color: var(--text);
+  color: var(--green-soft);
 }
 
 .result-actions {
