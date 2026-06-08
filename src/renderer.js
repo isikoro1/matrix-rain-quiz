@@ -26,12 +26,10 @@ function render(state, ranking, elements) {
     : `0 / ${QUESTION_COUNT}`;
   elements.timeLeft.textContent = String(state.remainingSeconds);
   elements.difficultyLabel.textContent = difficulty?.label ?? (state.isFinished ? "Finished" : "Ready");
-  elements.multiplier.textContent = difficulty ? `x${difficulty.multiplier}` : "x0";
   elements.score.textContent = String(state.totalScore);
-  elements.signalMode.textContent = question && difficulty ? `Katakana / ${difficulty.label}` : "Falling katakana words";
 
   elements.answerInput.disabled = !state.isPlaying;
-  elements.answerInput.maxLength = question?.length ?? 0;
+  elements.answerInput.removeAttribute("maxlength");
   elements.answerButton.disabled = !state.isPlaying;
   renderAnswerSlots(elements, state.isPlaying && question ? question.length : 0);
 

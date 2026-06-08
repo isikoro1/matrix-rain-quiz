@@ -2,6 +2,8 @@
 const { randomInt } = window.MatrixRainQuiz;
 
 const WORDS_BY_LENGTH = {
+  1: ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "サ", "タ", "ナ"],
+  2: ["アメ", "カサ", "ネコ", "ソラ", "ユメ", "カギ", "ミズ", "ハナ", "ツキ", "ホシ"],
   3: ["サクラ", "メロン", "テレビ", "ラジオ", "カメラ", "バナナ", "ピアノ"],
   4: ["パソコン", "リモコン", "タクシー", "カラオケ", "コンビニ", "ステーキ"],
   5: ["レストラン", "プレゼント", "カレンダー", "オムライス", "コンサート", "マヨネーズ", "プリンター"],
@@ -20,7 +22,7 @@ function randomWord(length) {
 }
 
 function createQuestion(index = 0) {
-  const length = Math.min(12, 3 + index);
+  const length = Math.min(12, Math.max(1, 3 + index));
   const answer = randomWord(length);
   return {
     answer,

@@ -29,7 +29,7 @@
             <span>Question</span>
             <strong id="questionCount">0 / 10</strong>
           </div>
-          <div class="meter">
+          <div class="meter time-meter">
             <span>Time</span>
             <strong id="timeLeft">60</strong>
           </div>
@@ -41,21 +41,13 @@
             <span>Level</span>
             <strong id="difficultyLabel">Ready</strong>
           </div>
-          <div class="meter">
-            <span>Multiplier</span>
-            <strong id="multiplier">x0</strong>
-          </div>
-        </div>
-
-        <div class="signal-readout">
-          <span id="signalMode">Find the signal in the rain</span>
         </div>
 
         <form id="answerForm" class="answer-row">
           <label for="answerInput">Answer</label>
           <div id="answerSlots" class="answer-slots" role="textbox" aria-label="Answer input" tabindex="0"></div>
           <input id="answerInput" class="answer-input" autocomplete="off" spellcheck="false">
-          <button id="answerButton" type="submit">Answer</button>
+          <button id="answerButton" class="answer-submit" type="submit" aria-label="Answer">↵</button>
         </form>
 
         <p id="message" class="message" role="status"></p>

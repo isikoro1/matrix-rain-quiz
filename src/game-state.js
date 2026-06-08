@@ -45,7 +45,7 @@ function advanceQuestion(state, lengthDelta = 0) {
     return;
   }
 
-  state.currentLength = Math.min(12, Math.max(3, state.currentLength + lengthDelta));
+  state.currentLength = Math.min(12, Math.max(1, state.currentLength + lengthDelta));
   state.questions[state.currentQuestionIndex] = createQuestion(state.currentLength - 3);
   state.currentAnswer = state.questions[state.currentQuestionIndex].answer;
   state.remainingSeconds = QUESTION_SECONDS;

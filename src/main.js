@@ -27,9 +27,7 @@ const elements = {
   questionCount: document.querySelector("#questionCount"),
   timeLeft: document.querySelector("#timeLeft"),
   difficultyLabel: document.querySelector("#difficultyLabel"),
-  multiplier: document.querySelector("#multiplier"),
   score: document.querySelector("#score"),
-  signalMode: document.querySelector("#signalMode"),
   answerForm: document.querySelector("#answerForm"),
   answerInput: document.querySelector("#answerInput"),
   answerSlots: document.querySelector("#answerSlots"),
@@ -131,7 +129,7 @@ function nextQuestion(message, tone = "", lengthDelta = 0) {
 }
 
 function handleTimeout() {
-  nextQuestion("Time up. Next signal.", "warn");
+  nextQuestion("Time up. Length down.", "warn", -1);
 }
 
 function tick() {
@@ -223,7 +221,7 @@ function submitAnswer(event) {
     return;
   }
 
-  nextQuestion("Incorrect. Length down.", "bad", -1);
+  nextQuestion("Incorrect. Length down.", "bad", -2);
 }
 
 function animate(time) {
