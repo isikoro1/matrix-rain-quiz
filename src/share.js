@@ -2,7 +2,7 @@
 const GAME_URL = "https://isikoro1.github.io/matrix-rain-quiz/";
 
 function openXShare(score) {
-  const text = `MATRIX RAIN QUIZで ${score} 点を取りました。\n降ってくるカタカナを読み取るタイピングクイズです。\n#MatrixRainQuiz`;
+  const text = `マトリックスの緑の画面でクイズで ${score} 点を取りました。\nDigital Rain Quiz\n#MatrixRainQuiz`;
   const params = new URLSearchParams({
     text,
     url: GAME_URL,

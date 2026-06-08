@@ -129,7 +129,9 @@ function nextQuestion(message, tone = "", lengthDelta = 0) {
 }
 
 function handleTimeout() {
-  nextQuestion("Time up. Length down.", "warn", -1);
+  const question = currentQuestion(state);
+  const answer = question ? ` Answer: ${question.answer}` : "";
+  nextQuestion(`Time up.${answer}`, "warn", -1);
 }
 
 function tick() {
