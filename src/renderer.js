@@ -5,16 +5,17 @@ let lastRenderedTimeDigits = ["", ""];
 function renderTime(elements, seconds, isPlaying) {
   const timeText = String(Math.max(0, seconds)).padStart(2, "0").slice(-2);
   const digits = [timeText[0], timeText[1]];
-  const digitElements = [elements.timeTens, elements.timeOnes];
+  const flashElements = [elements.timeTensFlash, elements.timeOnesFlash];
 
-  digitElements.forEach((digitElement, index) => {
+  elements.timeLeft.textContent = timeText;
+
+  flashElements.forEach((flashElement, index) => {
     const nextDigit = digits[index];
     const didChange = lastRenderedTimeDigits[index] !== "" && lastRenderedTimeDigits[index] !== nextDigit;
-    digitElement.textContent = nextDigit;
-    digitElement.classList.remove("time-tick");
+    flashElement.classList.remove("time-tick");
     if (isPlaying && didChange) {
-      void digitElement.offsetWidth;
-      digitElement.classList.add("time-tick");
+      void flashElement.offsetWidth;
+      flashElement.classList.add("time-tick");
     }
   });
 

@@ -228,26 +228,40 @@ button:focus-visible {
 .time-meter strong {
   position: relative;
   min-width: 2ch;
+  z-index: 1;
   color: var(--green);
   font-size: clamp(3.4rem, 16vw, 6.2rem);
   line-height: 0.95;
   text-shadow: 0 0 28px rgba(64, 255, 122, 0.5);
 }
 
+.time-meter {
+  position: relative;
+}
+
 .time-value {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  text-align: center;
 }
 
-.time-digit {
-  display: inline-grid;
-  width: 0.72em;
-  min-height: 0.95em;
-  place-items: center;
+.time-flashes {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 0.72em);
+  width: 1.44em;
+  height: 0.95em;
+  font-size: clamp(3.4rem, 16vw, 6.2rem);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
-.time-digit.time-tick {
+.time-flash {
+  display: block;
+}
+
+.time-flash.time-tick {
   animation: timeTypeFlash 180ms steps(2, end);
 }
 
@@ -451,6 +465,10 @@ button:focus-visible {
   }
 
   .time-meter strong {
+    font-size: clamp(3rem, 18vw, 5.2rem);
+  }
+
+  .time-flashes {
     font-size: clamp(3rem, 18vw, 5.2rem);
   }
 

@@ -14,7 +14,7 @@
     <meta name="twitter:title" content="マトリックスの緑の画面でクイズ">
     <meta name="twitter:description" content="Digital Rain Quiz。降ってくるカタカナを読み取るタイピングクイズ。">
     <meta name="twitter:image" content="https://isikoro1.github.io/matrix-rain-quiz/og-image.png">
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="stylesheet" href="styles.css?v=10">
   </head>
   <body>
     <canvas id="rainCanvas" aria-hidden="true"></canvas>
@@ -43,9 +43,11 @@
             </div>
             <div class="meter time-meter">
               <span>Time</span>
-              <strong id="timeLeft" class="time-value">
-                <span id="timeTens" class="time-digit">6</span><span id="timeOnes" class="time-digit">0</span>
-              </strong>
+              <strong id="timeLeft" class="time-value">60</strong>
+              <span class="time-flashes" aria-hidden="true">
+                <span id="timeTensFlash" class="time-flash"></span>
+                <span id="timeOnesFlash" class="time-flash"></span>
+              </span>
             </div>
             <div class="meter side-meter">
               <span>Level</span>
@@ -88,14 +90,14 @@
       </section>
     </main>
 
-    <script src="src/utils.js?v=9"></script>
-    <script src="src/scoring.js?v=9"></script>
-    <script src="src/quiz-generator.js?v=9"></script>
-    <script src="src/game-state.js?v=9"></script>
-    <script src="src/rain-engine.js?v=9"></script>
-    <script src="src/renderer.js?v=9"></script>
-    <script src="src/share.js?v=9"></script>
-    <script src="src/storage.js?v=9"></script>
-    <script src="src/main.js?v=9"></script>
+    <script src="src/utils.js?v=10"></script>
+    <script src="src/scoring.js?v=10"></script>
+    <script src="src/quiz-generator.js?v=10"></script>
+    <script src="src/game-state.js?v=10"></script>
+    <script src="src/rain-engine.js?v=10"></script>
+    <script src="src/renderer.js?v=10"></script>
+    <script src="src/share.js?v=10"></script>
+    <script src="src/storage.js?v=10"></script>
+    <script src="src/main.js?v=10"></script>
   </body>
 </html>
