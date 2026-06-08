@@ -54,7 +54,7 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 ## Canvas Rendering
 
-The canvas fills the viewport and draws semi-transparent black frames to create trail persistence. Columns contain spaced katakana glyphs and fall at speeds scaled by the current difficulty. Question characters are inserted into ordinary rain streams, without a fixed center display, separate columns, or a word overlay.
+The canvas follows the original matrix-rain simulator style: each column has a falling head position, and trail characters are drawn at `column.y - index * fontSize`. Question characters are inserted into those ordinary trails without sliding text, fixed center display, separate columns, or a word overlay.
 
 ## Script Loading
 

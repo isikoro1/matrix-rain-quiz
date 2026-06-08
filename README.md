@@ -24,7 +24,7 @@ No external library is required.
 - Title, countdown, game, and result screens
 - Katakana-only word mode
 - Word length starts at 3 characters and increases after correct answers
-- Question characters are embedded into ordinary rain streams
+- Question characters are embedded into prototype-style falling rain columns
 - Score based on word length, remaining seconds, and difficulty multiplier
 - X share intent after the game finishes
 - Local top-5 ranking saved in localStorage
