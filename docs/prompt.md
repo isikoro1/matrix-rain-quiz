@@ -12,7 +12,7 @@ The original request asked for a new static frontend app named `MATRIX RAIN QUIZ
 - Generate meaningful katakana answers.
 - Let the player answer with Enter or an Answer button.
 - Correct answers add score and advance.
-- Incorrect answers continue the current question.
+- Incorrect answers advance and reduce the next answer length by 1.
 - Timeout advances with 0 points.
 - Show final score after 10 questions.
 - Include X sharing and local top-5 ranking.

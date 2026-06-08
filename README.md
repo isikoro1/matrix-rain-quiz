@@ -24,6 +24,7 @@ No external library is required.
 - Title, countdown, game, and result screens
 - Katakana-only word mode
 - Word length starts at 3 characters and increases after correct answers
+- Incorrect answers advance to the next question and reduce the next word length by 1
 - Question characters are embedded into prototype-style falling rain columns
 - Score based on word length, remaining seconds, and difficulty multiplier
 - X share intent after the game finishes
@@ -58,7 +59,7 @@ No external library is required.
 - Submit an answer with the input button and the Enter key.
 - Confirm a correct answer adds score and advances to the next question.
 - Confirm answer length increases after correct answers.
-- Confirm incorrect answers keep the current question active.
+- Confirm incorrect answers advance and reduce the next answer length by 1.
 - Confirm timeout advances to the next question with 0 points.
 - Confirm the result screen appears after 10 questions.
 - Confirm the X share button opens a share URL.

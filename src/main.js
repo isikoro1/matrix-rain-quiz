@@ -96,8 +96,8 @@ function finishGame() {
   switchScreen("result");
 }
 
-function nextQuestion(message, tone = "") {
-  advanceQuestion(state);
+function nextQuestion(message, tone = "", lengthDelta = 0) {
+  advanceQuestion(state, lengthDelta);
   if (state.isFinished) {
     finishGame();
     return;
@@ -194,12 +194,11 @@ function submitAnswer(event) {
     state.lastScore = gained;
     state.totalScore += gained;
     state.clearedQuestions += 1;
-    nextQuestion(`Correct. +${gained} pts`, "");
+    nextQuestion(`Correct. +${gained} pts`, "", 1);
     return;
   }
 
-  elements.answerInput.select();
-  setMessage(elements, "Incorrect.", "bad");
+  nextQuestion("Incorrect. Length down.", "bad", -1);
 }
 
 function animate(time) {

@@ -13,7 +13,7 @@ MATRIX RAIN QUIZ is a static browser quiz game. It uses Matrix-style digital rai
 - Answer length increases by 1 after each correct answer, up to 12 characters in the MVP.
 - The player submits with Enter or the Answer button.
 - Correct answers add score and advance to the next question.
-- Incorrect answers keep the current question active.
+- Incorrect answers advance to the next question and reduce the next answer length by 1.
 - Timeout gives 0 points and advances to the next question.
 - The total score is shown after all 10 questions.
 

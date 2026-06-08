@@ -12,6 +12,7 @@ function createInitialState() {
     remainingSeconds: QUESTION_SECONDS,
     totalScore: 0,
     clearedQuestions: 0,
+    currentLength: 3,
     isPlaying: false,
     isFinished: false,
     lastScore: 0,
@@ -25,6 +26,7 @@ function startGame(state) {
   state.remainingSeconds = QUESTION_SECONDS;
   state.totalScore = 0;
   state.clearedQuestions = 0;
+  state.currentLength = 3;
   state.isPlaying = true;
   state.isFinished = false;
   state.lastScore = 0;
@@ -34,7 +36,7 @@ function currentQuestion(state) {
   return state.questions[state.currentQuestionIndex] ?? null;
 }
 
-function advanceQuestion(state) {
+function advanceQuestion(state, lengthDelta = 0) {
   state.currentQuestionIndex += 1;
   if (state.currentQuestionIndex >= QUESTION_COUNT) {
     state.isPlaying = false;
@@ -43,7 +45,8 @@ function advanceQuestion(state) {
     return;
   }
 
-  state.questions[state.currentQuestionIndex] = createQuestion(state.clearedQuestions);
+  state.currentLength = Math.min(12, Math.max(3, state.currentLength + lengthDelta));
+  state.questions[state.currentQuestionIndex] = createQuestion(state.currentLength - 3);
   state.currentAnswer = state.questions[state.currentQuestionIndex].answer;
   state.remainingSeconds = QUESTION_SECONDS;
 }

@@ -292,7 +292,7 @@ function createRainEngine(canvas) {
     column.residues = column.residues
       .map((residue) => ({
         ...residue,
-        char: Math.random() < elapsedSeconds * 0.9 && !residue.answerChar ? randomChar(residue.pattern) : residue.char,
+        char: Math.random() < elapsedSeconds * 0.9 ? randomChar(residue.pattern) : residue.char,
         life: residue.life - elapsedSeconds,
       }))
       .filter((residue) => residue.life > 0);
@@ -334,7 +334,6 @@ function createRainEngine(canvas) {
           y: point.y,
           char: column.headChar,
           pattern: column.pattern,
-          answerChar: column.answerMode,
           life: maxLife,
           maxLife,
         });

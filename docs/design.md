@@ -44,7 +44,7 @@ matrix-rain-quiz/
 4. A one-second interval decrements the active question timer.
 5. The current difficulty is derived from remaining seconds.
 6. Correct answers calculate score, increase the next answer length, update totals, and advance.
-7. Incorrect answers show a message and keep the same question.
+7. Incorrect answers advance, reduce the next answer length by 1, and show a message.
 8. Timeout advances with no score.
 9. After question 10, the result screen saves to localStorage, loads ranking, and shows share/retry/title actions.
 
