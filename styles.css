@@ -146,6 +146,7 @@ button:focus-visible {
 }
 
 .game-screen {
+  position: relative;
   grid-template-rows: auto 1fr auto;
   align-content: stretch;
   gap: 0;
@@ -204,15 +205,15 @@ button:focus-visible {
 }
 
 .answer-row {
-  align-self: center;
-  justify-self: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: min(560px, 100%);
-  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 48px;
   gap: 8px;
   align-items: center;
-  transform: translateY(-2svh);
+  transform: translate(-50%, -50%);
 }
 
 .answer-row label {
@@ -274,7 +275,10 @@ button:focus-visible {
 }
 
 .message {
-  justify-self: center;
+  position: absolute;
+  top: calc(50% + 42px);
+  left: 50%;
+  transform: translateX(-50%);
   width: min(520px, 100%);
   min-height: 22px;
   margin: 0;
@@ -370,7 +374,7 @@ button:focus-visible {
   .answer-row {
     width: min(100%, 420px);
     grid-template-columns: minmax(0, 1fr) 46px;
-    transform: translateY(-3svh);
+    transform: translate(-50%, -50%);
   }
 
   .answer-input {
