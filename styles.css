@@ -5,10 +5,10 @@
   --panel-strong: rgba(6, 28, 14, 0.92);
   --green: #40ff7a;
   --green-soft: #a0ffba;
-  --amber: #ffd166;
-  --red: #ff5f6d;
-  --text: #eaffef;
-  --muted: #8fb99d;
+  --amber: #d8ff79;
+  --red: #7dff9d;
+  --text: #d8ffe1;
+  --muted: #68c982;
   --line: rgba(85, 255, 139, 0.34);
 }
 
@@ -206,10 +206,33 @@ button:focus-visible {
 }
 
 .time-meter strong {
+  position: relative;
+  min-width: 2ch;
   color: var(--green);
   font-size: clamp(3.4rem, 16vw, 6.2rem);
   line-height: 0.95;
   text-shadow: 0 0 28px rgba(64, 255, 122, 0.5);
+}
+
+.time-meter strong.time-tick {
+  animation: timeTypeFlash 180ms steps(2, end);
+}
+
+@keyframes timeTypeFlash {
+  0% {
+    background: rgba(64, 255, 122, 0.34);
+    box-shadow:
+      0 0 0 5px rgba(64, 255, 122, 0.18),
+      0 0 26px rgba(64, 255, 122, 0.7),
+      inset 0 0 12px rgba(216, 255, 225, 0.45);
+    color: #f4fff7;
+  }
+
+  100% {
+    background: transparent;
+    box-shadow: none;
+    color: var(--green);
+  }
 }
 
 .answer-row {
@@ -303,11 +326,13 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-.message.bad {
+.message.bad,
+.final-feedback.bad {
   color: var(--red);
 }
 
-.message.warn {
+.message.warn,
+.final-feedback.warn {
   color: var(--amber);
 }
 
@@ -329,6 +354,13 @@ button:focus-visible {
 .result-summary p:last-child {
   margin-bottom: 0;
   color: var(--muted);
+}
+
+.final-feedback {
+  min-height: 24px;
+  margin: 10px 0 0;
+  color: var(--green-soft);
+  font-size: 0.95rem;
 }
 
 .ranking ol {

@@ -63,7 +63,7 @@ function randomWord(length) {
 }
 
 function createQuestion(index = 0) {
-  const length = Math.min(12, Math.max(3, 3 + index));
+  const length = Math.min(10, Math.max(3, 3 + index));
   const answer = randomWord(length);
   return {
     answer,

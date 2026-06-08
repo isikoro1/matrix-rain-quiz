@@ -39,6 +39,7 @@ const elements = {
   shareButton: document.querySelector("#shareButton"),
   finalScore: document.querySelector("#finalScore"),
   finalCleared: document.querySelector("#finalCleared"),
+  finalFeedback: document.querySelector("#finalFeedback"),
   rankingList: document.querySelector("#rankingList"),
 };
 
@@ -116,6 +117,8 @@ function finishGame() {
 }
 
 function nextQuestion(message, tone = "", lengthDelta = 0) {
+  state.resultMessage = message;
+  state.resultTone = tone;
   advanceQuestion(state, lengthDelta);
   if (state.isFinished) {
     finishGame();

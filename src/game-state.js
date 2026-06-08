@@ -16,6 +16,8 @@ function createInitialState() {
     isPlaying: false,
     isFinished: false,
     lastScore: 0,
+    resultMessage: "",
+    resultTone: "",
   };
 }
 
@@ -30,6 +32,8 @@ function startGame(state) {
   state.isPlaying = true;
   state.isFinished = false;
   state.lastScore = 0;
+  state.resultMessage = "";
+  state.resultTone = "";
 }
 
 function currentQuestion(state) {
@@ -45,7 +49,7 @@ function advanceQuestion(state, lengthDelta = 0) {
     return;
   }
 
-  state.currentLength = Math.min(12, Math.max(3, state.currentLength + lengthDelta));
+  state.currentLength = Math.min(10, Math.max(3, state.currentLength + lengthDelta));
   state.questions[state.currentQuestionIndex] = createQuestion(state.currentLength - 3);
   state.currentAnswer = state.questions[state.currentQuestionIndex].answer;
   state.remainingSeconds = QUESTION_SECONDS;

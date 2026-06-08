@@ -1,5 +1,6 @@
 (() => {
 const { currentQuestion, QUESTION_COUNT, getDifficulty, normalizeAnswer } = window.MatrixRainQuiz;
+let lastRenderedTime = null;
 
 function formatRankingItem(item) {
   const date = new Date(item.createdAt);
@@ -24,7 +25,16 @@ function render(state, ranking, elements) {
   elements.questionCount.textContent = state.isPlaying || state.isFinished
     ? `${Math.min(state.currentQuestionIndex + 1, QUESTION_COUNT)} / ${QUESTION_COUNT}`
     : `0 / ${QUESTION_COUNT}`;
-  elements.timeLeft.textContent = String(state.remainingSeconds);
+  const timeText = String(state.remainingSeconds);
+  if (elements.timeLeft.textContent !== timeText) {
+    elements.timeLeft.textContent = timeText;
+  }
+  if (state.isPlaying && lastRenderedTime !== null && lastRenderedTime !== state.remainingSeconds) {
+    elements.timeLeft.classList.remove("time-tick");
+    void elements.timeLeft.offsetWidth;
+    elements.timeLeft.classList.add("time-tick");
+  }
+  lastRenderedTime = state.remainingSeconds;
   elements.difficultyLabel.textContent = difficulty?.label ?? (state.isFinished ? "Finished" : "Ready");
   elements.score.textContent = String(state.totalScore);
 
@@ -35,6 +45,8 @@ function render(state, ranking, elements) {
 
   elements.finalScore.textContent = String(state.totalScore);
   elements.finalCleared.textContent = `${state.clearedQuestions} / ${QUESTION_COUNT} cleared`;
+  elements.finalFeedback.textContent = state.resultMessage ?? "";
+  elements.finalFeedback.className = `final-feedback ${state.resultTone ?? ""}`.trim();
   elements.shareButton.disabled = !state.isFinished;
 
   elements.rankingList.innerHTML = "";
