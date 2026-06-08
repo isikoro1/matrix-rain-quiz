@@ -5,17 +5,18 @@ let lastRenderedTimeDigits = ["", ""];
 function renderTime(elements, seconds, isPlaying) {
   const timeText = String(Math.max(0, seconds)).padStart(2, "0").slice(-2);
   const digits = [timeText[0], timeText[1]];
-  const flashElements = [elements.timeTensFlash, elements.timeOnesFlash];
+  const digitElements = [elements.timeTensDigit, elements.timeOnesDigit];
 
-  elements.timeLeft.textContent = timeText;
+  elements.timeLeft.setAttribute("aria-label", timeText);
 
-  flashElements.forEach((flashElement, index) => {
+  digitElements.forEach((digitElement, index) => {
     const nextDigit = digits[index];
     const didChange = lastRenderedTimeDigits[index] !== "" && lastRenderedTimeDigits[index] !== nextDigit;
-    flashElement.classList.remove("time-tick");
+    digitElement.dataset.digit = nextDigit;
+    digitElement.classList.remove("time-tick");
     if (isPlaying && didChange) {
-      void flashElement.offsetWidth;
-      flashElement.classList.add("time-tick");
+      void digitElement.offsetWidth;
+      digitElement.classList.add("time-tick");
     }
   });
 
