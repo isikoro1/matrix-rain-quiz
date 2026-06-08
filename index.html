@@ -4,7 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MATRIX RAIN QUIZ</title>
-    <link rel="stylesheet" href="styles.css?v=3">
+    <meta name="description" content="Falling katakana words appear in digital rain. Read the signal and type the answer before time runs out.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://isikoro1.github.io/matrix-rain-quiz/">
+    <meta property="og:title" content="MATRIX RAIN QUIZ">
+    <meta property="og:description" content="Digital rain に流れるカタカナを読み取るタイピングクイズ。">
+    <meta property="og:image" content="https://isikoro1.github.io/matrix-rain-quiz/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MATRIX RAIN QUIZ">
+    <meta name="twitter:description" content="Digital rain に流れるカタカナを読み取るタイピングクイズ。">
+    <meta name="twitter:image" content="https://isikoro1.github.io/matrix-rain-quiz/og-image.png">
+    <link rel="stylesheet" href="styles.css?v=4">
   </head>
   <body>
     <canvas id="rainCanvas" aria-hidden="true"></canvas>
@@ -24,33 +34,32 @@
       </section>
 
       <section id="gameScreen" class="screen game-screen" aria-label="Game">
-        <div class="game-hud">
-          <div class="meter">
-            <span>Question</span>
-            <strong id="questionCount">0 / 10</strong>
+        <div class="game-panel">
+          <div class="game-hud">
+            <div class="meter side-meter">
+              <span>Question</span>
+              <strong id="questionCount">0 / 10</strong>
+            </div>
+            <div class="meter time-meter">
+              <span>Time</span>
+              <strong id="timeLeft">60</strong>
+            </div>
+            <div class="meter side-meter">
+              <span>Level</span>
+              <strong id="difficultyLabel">Ready</strong>
+            </div>
           </div>
-          <div class="meter time-meter">
-            <span>Time</span>
-            <strong id="timeLeft">60</strong>
-          </div>
-          <div class="meter">
-            <span>Score</span>
-            <strong id="score">0</strong>
-          </div>
-          <div class="meter">
-            <span>Level</span>
-            <strong id="difficultyLabel">Ready</strong>
-          </div>
+
+          <form id="answerForm" class="answer-row">
+            <label for="answerInput">Answer</label>
+            <div id="answerSlots" class="answer-slots" role="textbox" aria-label="Answer input" tabindex="0"></div>
+            <input id="answerInput" class="answer-input" autocomplete="off" spellcheck="false">
+          </form>
+
+          <p id="message" class="message" role="status"></p>
+          <p class="score-line">Score <strong id="score">0</strong></p>
+          <button id="answerButton" class="answer-submit" form="answerForm" type="submit" aria-label="Answer">&#9166;</button>
         </div>
-
-        <form id="answerForm" class="answer-row">
-          <label for="answerInput">Answer</label>
-          <div id="answerSlots" class="answer-slots" role="textbox" aria-label="Answer input" tabindex="0"></div>
-          <input id="answerInput" class="answer-input" autocomplete="off" spellcheck="false">
-          <button id="answerButton" class="answer-submit" type="submit" aria-label="Answer">↵</button>
-        </form>
-
-        <p id="message" class="message" role="status"></p>
       </section>
 
       <section id="resultScreen" class="screen result-screen" aria-label="Result">
@@ -75,14 +84,14 @@
       </section>
     </main>
 
-    <script src="src/utils.js?v=3"></script>
-    <script src="src/scoring.js?v=3"></script>
-    <script src="src/quiz-generator.js?v=3"></script>
-    <script src="src/game-state.js?v=3"></script>
-    <script src="src/rain-engine.js?v=3"></script>
-    <script src="src/renderer.js?v=3"></script>
-    <script src="src/share.js?v=3"></script>
-    <script src="src/storage.js?v=3"></script>
-    <script src="src/main.js?v=3"></script>
+    <script src="src/utils.js?v=4"></script>
+    <script src="src/scoring.js?v=4"></script>
+    <script src="src/quiz-generator.js?v=4"></script>
+    <script src="src/game-state.js?v=4"></script>
+    <script src="src/rain-engine.js?v=4"></script>
+    <script src="src/renderer.js?v=4"></script>
+    <script src="src/share.js?v=4"></script>
+    <script src="src/storage.js?v=4"></script>
+    <script src="src/main.js?v=4"></script>
   </body>
 </html>

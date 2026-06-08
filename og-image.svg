@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#020403"/>
+  <g fill="#40ff7a" font-family="Consolas, 'Courier New', monospace" opacity="0.34">
+    <text x="80" y="86" font-size="34">カメラ　テレビ　サクラ　イシンデンシン</text>
+    <text x="140" y="164" font-size="30">ショウトクタイシ　コミュニケーション</text>
+    <text x="56" y="244" font-size="38">デジタルレイン　タイピング　クイズ</text>
+    <text x="210" y="520" font-size="32">オダノブナガ　メイキョウシスイ　シンカンセン</text>
+  </g>
+  <rect x="70" y="74" width="1060" height="482" rx="18" fill="none" stroke="#40ff7a" stroke-opacity="0.38" stroke-width="2"/>
+  <text x="600" y="274" fill="#eaffef" font-family="'Segoe UI', Arial, sans-serif" font-size="72" font-weight="900" text-anchor="middle">MATRIX RAIN QUIZ</text>
+  <text x="600" y="354" fill="#a0ffba" font-family="'Segoe UI', Arial, sans-serif" font-size="32" font-weight="700" text-anchor="middle">Falling katakana typing challenge</text>
+  <text x="600" y="416" fill="#40ff7a" font-family="Consolas, 'Courier New', monospace" font-size="28" font-weight="700" text-anchor="middle">isikoro1.github.io/matrix-rain-quiz</text>
+</svg>
