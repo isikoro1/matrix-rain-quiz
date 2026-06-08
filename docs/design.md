@@ -54,7 +54,7 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 ## Canvas Rendering
 
-The canvas follows the original matrix-rain simulator style: each column has a falling head position, and trail characters are drawn at `column.y - index * fontSize`. Question characters are inserted into those ordinary trails without sliding text, fixed center display, separate columns, or a word overlay.
+The canvas follows the original matrix-rain simulator style: each column has a typed `headChar`, row-based movement, `cps`, fading `residues`, and short `flashes`. Question characters are inserted as the pattern for ordinary columns, without sliding text, fixed center display, separate columns, or a word overlay.
 
 ## Script Loading
 
