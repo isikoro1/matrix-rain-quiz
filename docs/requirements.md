@@ -43,7 +43,7 @@ Examples:
 
 - Title screen: title, Start button, and canvas background.
 - Countdown screen: short countdown before play begins.
-- Game screen: digital rain where the background characters form the question, remaining time, current question count, score, difficulty, multiplier, answer input, answer button, and feedback messages.
+- Game screen: digital rain where ordinary background streams contain the question characters, remaining time, current question count, score, difficulty, multiplier, answer input, answer button, and feedback messages.
 - Result screen: final score, local ranking registration/loading, X share button, Title button, and Again button.
 
 ## Future Scope
