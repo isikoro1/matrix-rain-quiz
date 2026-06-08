@@ -27,6 +27,12 @@ Difficulty becomes easier every 20 seconds within a question.
 | 40-21 | Normal | 1 | Normal |
 | 20-0 | Easy | 0.8 | Slow |
 
+Rain characters also change by difficulty:
+
+- Hard: answer characters appear in random order, with symbol and number noise.
+- Normal: answer characters appear in reverse order, with number noise.
+- Easy: answer characters appear in correct order, with no non-answer noise.
+
 ## Scoring
 
 ```txt
@@ -43,7 +49,7 @@ Examples:
 
 - Title screen: title, Start button, and canvas background.
 - Countdown screen: short countdown before play begins.
-- Game screen: prototype-style digital rain where ordinary falling columns contain the question characters, remaining time, current question count, score, difficulty, multiplier, answer input, answer button, and feedback messages.
+- Game screen: prototype-style digital rain where ordinary falling columns contain the question characters, remaining time, current question count, score, difficulty, multiplier, per-character answer slots, answer button, and feedback messages.
 - Result screen: final score, local ranking registration/loading, X share button, Title button, and Again button.
 
 ## Future Scope

@@ -6,6 +6,17 @@ function formatRankingItem(item) {
   return `<strong>${item.score}</strong> pts / ${item.clearedQuestions} cleared / ${date.toLocaleDateString()}`;
 }
 
+function renderAnswerSlots(elements, length = 0) {
+  const chars = Array.from(elements.answerInput.value.normalize("NFKC"));
+  elements.answerSlots.innerHTML = "";
+  for (let index = 0; index < length; index += 1) {
+    const slot = document.createElement("span");
+    slot.className = "answer-slot";
+    slot.textContent = chars[index] ?? "";
+    elements.answerSlots.append(slot);
+  }
+}
+
 function render(state, ranking, elements) {
   const question = currentQuestion(state);
   const difficulty = state.isPlaying ? getDifficulty(state.remainingSeconds) : null;
@@ -17,12 +28,13 @@ function render(state, ranking, elements) {
   elements.difficultyLabel.textContent = difficulty?.label ?? (state.isFinished ? "Finished" : "Ready");
   elements.multiplier.textContent = difficulty ? `x${difficulty.multiplier}` : "x0";
   elements.score.textContent = String(state.totalScore);
-  elements.signalMode.textContent = question && difficulty
-    ? `カタカナ / ${question.length}文字 / ${difficulty.label}`
-    : "Falling katakana words";
+  elements.signalMode.textContent = question && difficulty ? `Katakana / ${difficulty.label}` : "Falling katakana words";
 
   elements.answerInput.disabled = !state.isPlaying;
+  elements.answerInput.maxLength = question?.length ?? 0;
   elements.answerButton.disabled = !state.isPlaying;
+  renderAnswerSlots(elements, state.isPlaying && question ? question.length : 0);
+
   elements.finalScore.textContent = String(state.totalScore);
   elements.finalCleared.textContent = `${state.clearedQuestions} / ${QUESTION_COUNT} cleared`;
   elements.shareButton.disabled = !state.isFinished;
@@ -63,6 +75,7 @@ function showScreen(elements, name) {
 
 Object.assign(window.MatrixRainQuiz, {
   render,
+  renderAnswerSlots,
   setMessage,
   showScreen,
 });

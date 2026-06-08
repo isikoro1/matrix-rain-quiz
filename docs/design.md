@@ -56,6 +56,8 @@ The timer is reset to 60 seconds for each question. Difficulty is not stored ind
 
 The canvas follows the original matrix-rain simulator style: each column has a typed `headChar`, row-based movement, `cps`, fading `residues`, and short `flashes`. Question characters are inserted as the pattern for ordinary columns, without sliding text, fixed center display, separate columns, or a word overlay.
 
+Difficulty controls both the answer order and the non-answer character pool. Hard uses random answer order plus symbol/number noise, Normal uses reverse answer order plus number noise, and Easy uses the answer characters only.
+
 ## Script Loading
 
 The source is split by responsibility, but files are loaded as classic scripts instead of ES modules so the app can run from `file://` when `index.html` is opened directly.

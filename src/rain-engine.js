@@ -1,7 +1,9 @@
 (() => {
 const { randomInt } = window.MatrixRainQuiz;
 
-const GLYPHS = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン";
+const KATAKANA = "\u30a2\u30a4\u30a6\u30a8\u30aa\u30ab\u30ad\u30af\u30b1\u30b3\u30b5\u30b7\u30b9\u30bb\u30bd\u30bf\u30c1\u30c4\u30c6\u30c8\u30ca\u30cb\u30cc\u30cd\u30ce\u30cf\u30d2\u30d5\u30d8\u30db\u30de\u30df\u30e0\u30e1\u30e2\u30e4\u30e6\u30e8\u30e9\u30ea\u30eb\u30ec\u30ed\u30ef\u30f3";
+const DIGITS = "0123456789";
+const SYMBOLS = "@#$%&*+-=<>[]{}?/\\|:;!";
 
 function createRainEngine(canvas) {
   const context = canvas.getContext("2d");
@@ -11,6 +13,8 @@ function createRainEngine(canvas) {
     height: 0,
     dpr: 1,
     target: "",
+    difficultyKey: "idle",
+    noisePattern: KATAKANA,
     speedScale: 1,
     lastTime: 0,
   };
@@ -32,22 +36,24 @@ function createRainEngine(canvas) {
     backgroundColor: "#000000",
   };
 
-  function randomChar(pattern = GLYPHS) {
-    const chars = Array.from(pattern);
-    return chars[randomInt(0, chars.length - 1)] || "ア";
+  function randomChar(pattern = KATAKANA) {
+    const chars = Array.from(pattern || KATAKANA);
+    return chars[randomInt(0, chars.length - 1)] || "\u30a2";
   }
 
   function characterAt(chars, index) {
-    const glyphs = Array.from(chars);
-    return glyphs[((index % glyphs.length) + glyphs.length) % glyphs.length] || "ア";
+    const glyphs = Array.from(chars || KATAKANA);
+    return glyphs[((index % glyphs.length) + glyphs.length) % glyphs.length] || "\u30a2";
   }
 
   function nextCharacter(column) {
+    if (column.randomOrder) {
+      return randomChar(column.pattern);
+    }
     if (column.answerMode) {
       column.charIndex += 1;
       return characterAt(column.pattern, column.charIndex);
     }
-
     column.charIndex = randomInt(0, Array.from(column.pattern).length - 1);
     return characterAt(column.pattern, column.charIndex);
   }
@@ -74,6 +80,41 @@ function createRainEngine(canvas) {
 
   function colorToCss(rgb) {
     return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+  }
+
+  function shuffleText(value) {
+    const chars = Array.from(value);
+    for (let index = chars.length - 1; index > 0; index -= 1) {
+      const swapIndex = randomInt(0, index);
+      [chars[index], chars[swapIndex]] = [chars[swapIndex], chars[index]];
+    }
+    return chars.join("");
+  }
+
+  function displayPatternFor(target, difficultyKey) {
+    if (difficultyKey === "hard") {
+      return shuffleText(target);
+    }
+    if (difficultyKey === "normal") {
+      return Array.from(target).reverse().join("");
+    }
+    return target;
+  }
+
+  function noisePatternFor(target, difficultyKey) {
+    if (!target) {
+      return KATAKANA;
+    }
+    if (difficultyKey === "countdown") {
+      return target;
+    }
+    if (difficultyKey === "hard") {
+      return `${target}${DIGITS}${SYMBOLS}`;
+    }
+    if (difficultyKey === "normal") {
+      return `${target}${DIGITS}`;
+    }
+    return target;
   }
 
   function flowExtent() {
@@ -104,7 +145,7 @@ function createRainEngine(canvas) {
       textRgb,
       headRgb,
       backgroundRgb,
-      characterPatterns: [GLYPHS],
+      characterPatterns: [state.noisePattern || KATAKANA],
     };
   }
 
@@ -119,7 +160,6 @@ function createRainEngine(canvas) {
     if (activeCount >= s.displayLimit) {
       return true;
     }
-
     const minCps = Math.max(1.2, s.speedMin * 0.35 * layer.speedScale);
     const maxCps = Math.max(minCps, s.speedMax * 2.2 * layer.speedScale * s.frequency);
     const speedRatio = Math.min(1, Math.max(0, (cps - minCps) / (maxCps - minCps || 1)));
@@ -145,7 +185,7 @@ function createRainEngine(canvas) {
     const varianceFactor = varianceMin + (varianceMax - varianceMin) * distributionSample();
     const minVisibleCps = Math.max(1.2, s.speedMin * 0.35 * layer.speedScale);
     const cps = Math.max(minVisibleCps, baseCps * varianceFactor * layer.speedScale * s.frequency);
-    const pattern = s.characterPatterns[randomInt(0, s.characterPatterns.length - 1)] || GLYPHS;
+    const pattern = s.characterPatterns[randomInt(0, s.characterPatterns.length - 1)] || KATAKANA;
     const charIndex = randomInt(0, Array.from(pattern).length - 1);
 
     return {
@@ -161,6 +201,7 @@ function createRainEngine(canvas) {
       residues: [],
       flashes: [],
       answerMode: false,
+      randomOrder: false,
     };
   }
 
@@ -189,11 +230,18 @@ function createRainEngine(canvas) {
     return layer;
   }
 
-  function applyTarget(target) {
+  function applyTarget(target, difficultyKey = "idle") {
+    state.target = target;
+    state.difficultyKey = difficultyKey;
+    state.noisePattern = noisePatternFor(target, difficultyKey);
+
     state.layers.forEach((layer) => {
       layer.columns.forEach((column) => {
         column.answerMode = false;
-        column.pattern = GLYPHS;
+        column.randomOrder = false;
+        column.pattern = state.noisePattern;
+        column.residues = [];
+        column.flashes = [];
       });
     });
 
@@ -201,6 +249,7 @@ function createRainEngine(canvas) {
       return;
     }
 
+    const answerPattern = displayPatternFor(target, difficultyKey);
     const frontLayers = state.layers.slice(0, Math.min(2, state.layers.length));
     let assigned = 0;
     frontLayers.forEach((layer) => {
@@ -210,9 +259,10 @@ function createRainEngine(canvas) {
           return;
         }
         column.answerMode = true;
-        column.pattern = target;
+        column.randomOrder = difficultyKey === "hard";
+        column.pattern = answerPattern;
         column.charIndex = -1;
-        column.headChar = characterAt(target, 0);
+        column.headChar = column.randomOrder ? randomChar(answerPattern) : characterAt(answerPattern, 0);
         column.startDelay = randomInt(0, 16);
         column.skip = false;
         column.residues = [];
@@ -265,12 +315,10 @@ function createRainEngine(canvas) {
     if (column.startDelay > 0) {
       return;
     }
-
     const headFlow = column.row * layer.rowStep + layer.rowStep / 2;
     if (headFlow < -layer.rowStep || headFlow > flowExtent() + layer.rowStep) {
       return;
     }
-
     const point = flowPoint(column.x, headFlow);
     const base = mix(s.textRgb, s.headRgb, 0.22 + layer.frontRatio * 0.3);
     const color = colorToCss(mix(base, [255, 255, 255], 0.2 + layer.frontRatio * 0.35));
@@ -360,10 +408,12 @@ function createRainEngine(canvas) {
         replaceColumn(layer, index, s, column.residues);
         if (keepAnswer && state.target) {
           const next = layer.columns[index];
+          const answerPattern = displayPatternFor(state.target, state.difficultyKey);
           next.answerMode = true;
-          next.pattern = state.target;
+          next.randomOrder = state.difficultyKey === "hard";
+          next.pattern = answerPattern;
           next.charIndex = -1;
-          next.headChar = characterAt(state.target, 0);
+          next.headChar = next.randomOrder ? randomChar(answerPattern) : characterAt(answerPattern, 0);
           next.skip = false;
         }
         return;
@@ -393,7 +443,7 @@ function createRainEngine(canvas) {
   function resetRain() {
     const s = settings();
     state.layers = Array.from({ length: s.depth }, (_, index) => makeLayer(index, s));
-    applyTarget(state.target);
+    applyTarget(state.target, state.difficultyKey);
     paintBackground(s);
   }
 
@@ -413,10 +463,23 @@ function createRainEngine(canvas) {
     state.speedScale = value;
   }
 
-  function draw(target = "") {
-    if (target !== state.target) {
-      state.target = target;
-      applyTarget(target);
+  function normalizeSignal(signal) {
+    if (typeof signal === "string") {
+      return {
+        difficultyKey: signal ? "easy" : "idle",
+        text: signal,
+      };
+    }
+    return {
+      difficultyKey: signal?.difficultyKey ?? "idle",
+      text: signal?.text ?? "",
+    };
+  }
+
+  function draw(signal = "") {
+    const nextSignal = normalizeSignal(signal);
+    if (nextSignal.text !== state.target || nextSignal.difficultyKey !== state.difficultyKey) {
+      applyTarget(nextSignal.text, nextSignal.difficultyKey);
     }
 
     const now = typeof performance !== "undefined" && performance.now ? performance.now() : Date.now();

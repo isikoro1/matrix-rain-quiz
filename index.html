@@ -53,7 +53,8 @@
 
         <form id="answerForm" class="answer-row">
           <label for="answerInput">Answer</label>
-          <input id="answerInput" autocomplete="off" spellcheck="false" placeholder="TYPE ANSWER">
+          <div id="answerSlots" class="answer-slots" role="textbox" aria-label="Answer input" tabindex="0"></div>
+          <input id="answerInput" class="answer-input" autocomplete="off" spellcheck="false">
           <button id="answerButton" type="submit">Answer</button>
         </form>
 

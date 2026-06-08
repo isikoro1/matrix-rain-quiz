@@ -10,6 +10,7 @@ const {
   normalizeAnswer,
   openXShare,
   render,
+  renderAnswerSlots,
   saveResult,
   setMessage,
   showScreen,
@@ -31,6 +32,7 @@ const elements = {
   signalMode: document.querySelector("#signalMode"),
   answerForm: document.querySelector("#answerForm"),
   answerInput: document.querySelector("#answerInput"),
+  answerSlots: document.querySelector("#answerSlots"),
   answerButton: document.querySelector("#answerButton"),
   message: document.querySelector("#message"),
   startButton: document.querySelector("#startButton"),
@@ -49,6 +51,7 @@ let timerId = null;
 let countdownId = null;
 let lastFrame = 0;
 let activeScreen = "title";
+let countdownRainText = "";
 
 function stopTimer() {
   if (timerId) {
@@ -70,16 +73,33 @@ function switchScreen(name) {
 }
 
 function currentSignal() {
+  if (activeScreen === "countdown") {
+    return {
+      difficultyKey: "countdown",
+      text: countdownRainText,
+    };
+  }
+
   if (!state.isPlaying) {
-    return "";
+    return {
+      difficultyKey: "idle",
+      text: "",
+    };
   }
 
   const question = currentQuestion(state);
   if (!question) {
-    return "";
+    return {
+      difficultyKey: "idle",
+      text: "",
+    };
   }
 
-  return question.answer;
+  const difficulty = getDifficulty(state.remainingSeconds);
+  return {
+    difficultyKey: difficulty.key,
+    text: question.answer,
+  };
 }
 
 function finishGame() {
@@ -151,18 +171,22 @@ function startCountdown() {
 
   let value = 3;
   elements.countdownNumber.textContent = String(value);
+  countdownRainText = String(value);
   countdownId = window.setInterval(() => {
     value -= 1;
     if (value > 0) {
       elements.countdownNumber.textContent = String(value);
+      countdownRainText = String(value);
       return;
     }
 
     if (value === 0) {
       elements.countdownNumber.textContent = "GO";
+      countdownRainText = "0";
       return;
     }
 
+    countdownRainText = "";
     beginGame();
   }, 850);
 }
@@ -216,6 +240,12 @@ elements.startButton.addEventListener("click", startCountdown);
 elements.retryButton.addEventListener("click", startCountdown);
 elements.titleButton.addEventListener("click", goTitle);
 elements.answerForm.addEventListener("submit", submitAnswer);
+elements.answerInput.addEventListener("input", () => {
+  const question = currentQuestion(state);
+  renderAnswerSlots(elements, state.isPlaying && question ? question.length : 0);
+});
+elements.answerSlots.addEventListener("click", () => elements.answerInput.focus());
+elements.answerSlots.addEventListener("focus", () => elements.answerInput.focus());
 elements.shareButton.addEventListener("click", () => openXShare(state.totalScore));
 
 render(state, ranking, elements);

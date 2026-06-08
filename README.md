@@ -26,6 +26,8 @@ No external library is required.
 - Word length starts at 3 characters and increases after correct answers
 - Incorrect answers advance to the next question and reduce the next word length by 1
 - Question characters are embedded into prototype-style falling rain columns
+- Difficulty changes the rain characters: hard adds symbol/number noise, normal adds number noise, easy uses only answer characters
+- The answer input is shown as one slot per character
 - Score based on word length, remaining seconds, and difficulty multiplier
 - X share intent after the game finishes
 - Local top-5 ranking saved in localStorage
@@ -56,6 +58,7 @@ No external library is required.
 - Press Start and confirm the countdown appears before the 10-question quiz begins.
 - Confirm each question has a 60-second timer.
 - Confirm difficulty, multiplier, falling word display, and rain speed change every 20 seconds.
+- Confirm hard uses random answer order with symbol/number noise, normal uses reversed order with number noise, and easy uses answer order only.
 - Submit an answer with the input button and the Enter key.
 - Confirm a correct answer adds score and advances to the next question.
 - Confirm answer length increases after correct answers.
