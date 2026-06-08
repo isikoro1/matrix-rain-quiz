@@ -26,6 +26,8 @@ const elements = {
   countdownNumber: document.querySelector("#countdownNumber"),
   questionCount: document.querySelector("#questionCount"),
   timeLeft: document.querySelector("#timeLeft"),
+  timeTens: document.querySelector("#timeTens"),
+  timeOnes: document.querySelector("#timeOnes"),
   difficultyLabel: document.querySelector("#difficultyLabel"),
   score: document.querySelector("#score"),
   answerForm: document.querySelector("#answerForm"),

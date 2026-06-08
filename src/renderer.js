@@ -1,24 +1,24 @@
 (() => {
 const { currentQuestion, QUESTION_COUNT, getDifficulty, normalizeAnswer } = window.MatrixRainQuiz;
-let lastRenderedTimeText = "";
+let lastRenderedTimeDigits = ["", ""];
 
 function renderTime(elements, seconds, isPlaying) {
-  const timeText = String(seconds);
-  const previous = lastRenderedTimeText.padStart(timeText.length, " ");
-  const chars = Array.from(timeText);
+  const timeText = String(Math.max(0, seconds)).padStart(2, "0").slice(-2);
+  const digits = [timeText[0], timeText[1]];
+  const digitElements = [elements.timeTens, elements.timeOnes];
 
-  elements.timeLeft.innerHTML = "";
-  chars.forEach((char, index) => {
-    const digit = document.createElement("span");
-    digit.className = "time-digit";
-    digit.textContent = char;
-    if (isPlaying && previous[index] !== char) {
-      digit.classList.add("time-tick");
+  digitElements.forEach((digitElement, index) => {
+    const nextDigit = digits[index];
+    const didChange = lastRenderedTimeDigits[index] !== "" && lastRenderedTimeDigits[index] !== nextDigit;
+    digitElement.textContent = nextDigit;
+    digitElement.classList.remove("time-tick");
+    if (isPlaying && didChange) {
+      void digitElement.offsetWidth;
+      digitElement.classList.add("time-tick");
     }
-    elements.timeLeft.append(digit);
   });
 
-  lastRenderedTimeText = timeText;
+  lastRenderedTimeDigits = digits;
 }
 
 function formatRankingItem(item) {
