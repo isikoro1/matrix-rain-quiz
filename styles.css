@@ -72,6 +72,19 @@ input {
   gap: 10px;
 }
 
+.title-tagline {
+  max-width: min(640px, 92vw);
+  margin: -12px 0 0;
+  color: var(--green-soft);
+  font-size: clamp(0.95rem, 3.6vw, 1.25rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-shadow:
+    0 0 8px rgba(64, 255, 122, 0.62),
+    0 0 22px rgba(64, 255, 122, 0.34);
+}
+
 .eyebrow {
   margin: 0;
   color: var(--green);
@@ -93,7 +106,12 @@ h1 {
   margin-bottom: 0;
   font-size: clamp(2.6rem, 9vw, 5.6rem);
   line-height: 1;
-  text-shadow: 0 0 24px rgba(64, 255, 122, 0.44);
+  color: #e8ffed;
+  text-shadow:
+    0 0 3px #e8ffed,
+    0 0 10px rgba(64, 255, 122, 0.95),
+    0 0 24px rgba(64, 255, 122, 0.68),
+    0 0 54px rgba(64, 255, 122, 0.42);
 }
 
 h2 {

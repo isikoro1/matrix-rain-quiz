@@ -48,10 +48,12 @@ const rain = createRainEngine(elements.canvas);
 let ranking = [];
 let timerId = null;
 let countdownId = null;
+let resolutionId = null;
 let lastFrame = 0;
 let activeScreen = "title";
 let countdownRainText = "";
 let isComposingAnswer = false;
+let isResolvingQuestion = false;
 
 function stopTimer() {
   if (timerId) {
@@ -65,6 +67,14 @@ function stopCountdown() {
     window.clearInterval(countdownId);
     countdownId = null;
   }
+}
+
+function stopResolution() {
+  if (resolutionId) {
+    window.clearTimeout(resolutionId);
+    resolutionId = null;
+  }
+  isResolvingQuestion = false;
 }
 
 function switchScreen(name) {
@@ -131,14 +141,47 @@ function nextQuestion(message, tone = "", lengthDelta = 0) {
   render(state, ranking, elements);
 }
 
+function resolveQuestion(message, tone = "", lengthDelta = 0) {
+  if (isResolvingQuestion) {
+    return;
+  }
+
+  isResolvingQuestion = true;
+  stopTimer();
+  state.resultMessage = message;
+  state.resultTone = tone;
+  setMessage(elements, message, tone);
+  render(state, ranking, elements);
+  elements.answerButton.disabled = true;
+  elements.answerInput.disabled = true;
+
+  resolutionId = window.setTimeout(() => {
+    resolutionId = null;
+    advanceQuestion(state, lengthDelta);
+    isResolvingQuestion = false;
+
+    if (state.isFinished) {
+      finishGame();
+      return;
+    }
+
+    elements.answerInput.value = "";
+    elements.answerInput.disabled = false;
+    elements.answerInput.focus();
+    setMessage(elements, "Decode the signal.");
+    render(state, ranking, elements);
+    timerId = window.setInterval(tick, 1000);
+  }, 1100);
+}
+
 function handleTimeout() {
   const question = currentQuestion(state);
   const answer = question ? ` Answer: ${question.answer}` : "";
-  nextQuestion(`Time up.${answer}`, "warn", -1);
+  resolveQuestion(`Time up.${answer}`, "warn", -1);
 }
 
 function tick() {
-  if (!state.isPlaying) {
+  if (!state.isPlaying || isResolvingQuestion) {
     return;
   }
 
@@ -156,6 +199,7 @@ function tick() {
 function beginGame() {
   stopTimer();
   stopCountdown();
+  stopResolution();
   startGame(state);
   ranking = [];
   switchScreen("game");
@@ -169,6 +213,7 @@ function beginGame() {
 function startCountdown() {
   stopTimer();
   stopCountdown();
+  stopResolution();
   state.isPlaying = false;
   state.isFinished = false;
   switchScreen("countdown");
@@ -198,6 +243,7 @@ function startCountdown() {
 function goTitle() {
   stopTimer();
   stopCountdown();
+  stopResolution();
   state.isPlaying = false;
   state.isFinished = false;
   state.remainingSeconds = 60;
@@ -206,7 +252,7 @@ function goTitle() {
 
 function submitAnswer(event) {
   event.preventDefault();
-  if (!state.isPlaying) {
+  if (!state.isPlaying || isResolvingQuestion) {
     return;
   }
 
@@ -226,7 +272,7 @@ function submitAnswer(event) {
     return;
   }
 
-  nextQuestion(`Incorrect. Answer: ${question.answer}`, "bad", -2);
+  resolveQuestion(`Incorrect. Answer: ${question.answer}`, "bad", -2);
 }
 
 function animate(time) {
