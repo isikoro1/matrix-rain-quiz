@@ -19,7 +19,11 @@ function clamp(value, min, max) {
 }
 
 function normalizeAnswer(value) {
-  return value.trim().toUpperCase().normalize("NFKC");
+  return value
+    .trim()
+    .toUpperCase()
+    .normalize("NFKC")
+    .replace(/[\u3041-\u3096]/g, (char) => String.fromCharCode(char.charCodeAt(0) + 0x60));
 }
 
 Object.assign(window.MatrixRainQuiz, {

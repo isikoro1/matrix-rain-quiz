@@ -1,5 +1,5 @@
 (() => {
-const { currentQuestion, QUESTION_COUNT, getDifficulty } = window.MatrixRainQuiz;
+const { currentQuestion, QUESTION_COUNT, getDifficulty, normalizeAnswer } = window.MatrixRainQuiz;
 
 function formatRankingItem(item) {
   const date = new Date(item.createdAt);
@@ -7,7 +7,7 @@ function formatRankingItem(item) {
 }
 
 function renderAnswerSlots(elements, length = 0) {
-  const chars = Array.from(elements.answerInput.value.normalize("NFKC"));
+  const chars = Array.from(normalizeAnswer(elements.answerInput.value));
   elements.answerSlots.innerHTML = "";
   for (let index = 0; index < length; index += 1) {
     const slot = document.createElement("span");

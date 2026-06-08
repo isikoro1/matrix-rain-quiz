@@ -52,6 +52,7 @@ let countdownId = null;
 let lastFrame = 0;
 let activeScreen = "title";
 let countdownRainText = "";
+let isComposingAnswer = false;
 
 function stopTimer() {
   if (timerId) {
@@ -240,10 +241,26 @@ elements.startButton.addEventListener("click", startCountdown);
 elements.retryButton.addEventListener("click", startCountdown);
 elements.titleButton.addEventListener("click", goTitle);
 elements.answerForm.addEventListener("submit", submitAnswer);
-elements.answerInput.addEventListener("input", () => {
+function syncAnswerInput() {
   const question = currentQuestion(state);
+  if (state.isPlaying && question && !isComposingAnswer) {
+    const normalized = normalizeAnswer(elements.answerInput.value);
+    const nextValue = Array.from(normalized).slice(0, question.length).join("");
+    if (elements.answerInput.value !== nextValue) {
+      elements.answerInput.value = nextValue;
+    }
+  }
   renderAnswerSlots(elements, state.isPlaying && question ? question.length : 0);
+}
+
+elements.answerInput.addEventListener("compositionstart", () => {
+  isComposingAnswer = true;
 });
+elements.answerInput.addEventListener("compositionend", () => {
+  isComposingAnswer = false;
+  syncAnswerInput();
+});
+elements.answerInput.addEventListener("input", syncAnswerInput);
 elements.answerSlots.addEventListener("click", () => elements.answerInput.focus());
 elements.answerSlots.addEventListener("focus", () => elements.answerInput.focus());
 elements.shareButton.addEventListener("click", () => openXShare(state.totalScore));
