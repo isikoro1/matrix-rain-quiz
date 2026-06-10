@@ -230,7 +230,7 @@ button:focus-visible {
   min-width: 2ch;
   z-index: 1;
   color: var(--green);
-  font-size: clamp(3.1rem, 15vw, 5.6rem);
+  font-size: 1rem;
   line-height: 1;
   text-shadow:
     0 0 4px rgba(216, 255, 225, 0.82),
@@ -242,33 +242,21 @@ button:focus-visible {
   position: relative;
 }
 
-.time-value {
-  display: inline-flex;
-  min-width: 2.24em;
-  gap: 0.12em;
+.time-meter .time-value {
+  display: flex;
+  min-width: auto;
+  gap: clamp(8px, 2vw, 14px);
   justify-content: center;
-  padding: 0.12em 0.14em;
-  border: 1px solid rgba(64, 255, 122, 0.62);
-  border-radius: 4px;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(64, 255, 122, 0.08) 0,
-      rgba(64, 255, 122, 0.08) 1px,
-      transparent 1px,
-      transparent 6px
-    ),
-    linear-gradient(180deg, rgba(3, 24, 10, 0.92), rgba(0, 5, 2, 0.96));
-  box-shadow:
-    0 0 0 1px rgba(64, 255, 122, 0.16),
-    0 0 28px rgba(64, 255, 122, 0.2),
-    inset 0 0 20px rgba(64, 255, 122, 0.16);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .segment-digit {
   position: relative;
-  width: 0.72em;
-  height: 1.08em;
+  width: clamp(58px, 14vw, 96px);
+  height: clamp(96px, 24vw, 158px);
   display: block;
 }
 
@@ -290,49 +278,49 @@ button:focus-visible {
 .seg-a,
 .seg-d,
 .seg-g {
-  left: 0.14em;
-  width: 0.44em;
-  height: 0.075em;
+  left: 18%;
+  width: 64%;
+  height: 7%;
 }
 
 .seg-a {
-  top: 0.05em;
+  top: 3%;
 }
 
 .seg-g {
-  top: 0.5em;
+  top: 46.5%;
 }
 
 .seg-d {
-  bottom: 0.05em;
+  bottom: 3%;
 }
 
 .seg-b,
 .seg-c,
 .seg-e,
 .seg-f {
-  width: 0.075em;
-  height: 0.36em;
+  width: 9%;
+  height: 38%;
 }
 
 .seg-b,
 .seg-c {
-  right: 0.07em;
+  right: 5%;
 }
 
 .seg-e,
 .seg-f {
-  left: 0.07em;
+  left: 5%;
 }
 
 .seg-b,
 .seg-f {
-  top: 0.12em;
+  top: 9%;
 }
 
 .seg-c,
 .seg-e {
-  bottom: 0.12em;
+  bottom: 9%;
 }
 
 .segment-digit[data-digit="0"] .seg-a,
@@ -587,7 +575,12 @@ button:focus-visible {
   }
 
   .time-meter strong {
-    font-size: clamp(2.8rem, 17vw, 4.8rem);
+    font-size: 1rem;
+  }
+
+  .segment-digit {
+    width: clamp(54px, 18vw, 78px);
+    height: clamp(90px, 29vw, 128px);
   }
 
   .answer-row {
