@@ -36,6 +36,7 @@ No external library is required.
 
 - Canvas drawing and game state management are separated.
 - Katakana word data is separated into `data/katakana-words.js` for review.
+- Accepted alternate answers are separated into `data/katakana-answer-variants.js`.
 - Difficulty changes at 60-41, 40-21, and 20-0 seconds.
 - Score uses `Math.floor(wordLength + remainingSeconds * difficultyMultiplier)`.
 - Difficulty multipliers are Hard `1.5`, Normal `1`, and Easy `0.8`.

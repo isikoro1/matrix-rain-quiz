@@ -14,6 +14,7 @@ matrix-rain-quiz/
     prompt.md
   data/
     katakana-words.js
+    katakana-answer-variants.js
   src/
     main.js
     game-state.js
@@ -31,6 +32,8 @@ matrix-rain-quiz/
 - `main.js`: DOM wiring, event listeners, game start, answer handling, timer, render loop
 - `game-state.js`: question index, answer, timer value, score, play state
 - `data/katakana-words.js`: reviewable katakana word lists by character count
+- `data/katakana-answer-variants.js`: reviewable alternate answer pairs
+- `answer-matcher.js`: exact and alternate-answer matching
 - `quiz-generator.js`: word selection by current answer length
 - `scoring.js`: difficulty selection, multiplier, score calculation
 - `rain-engine.js`: canvas state, columns, glyph updates, speed scaling

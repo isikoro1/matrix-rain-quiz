@@ -6,6 +6,7 @@ const {
   createRainEngine,
   currentQuestion,
   getDifficulty,
+  isAcceptedAnswer,
   loadRanking,
   normalizeAnswer,
   openXShare,
@@ -264,7 +265,7 @@ function submitAnswer(event) {
     return;
   }
 
-  if (input === normalizeAnswer(question.answer)) {
+  if (isAcceptedAnswer(input, question.answer)) {
     const difficulty = getDifficulty(state.remainingSeconds);
     const gained = calculateScore(state.remainingSeconds, difficulty.multiplier, question.length);
     state.lastScore = gained;
