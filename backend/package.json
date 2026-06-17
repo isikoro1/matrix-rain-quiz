@@ -1,0 +1,15 @@
+{
+  "name": "matrix-rain-quiz-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test/validation.test.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:apply:local": "wrangler d1 execute matrix-rain-quiz --local --file=./schema.sql",
+    "db:apply": "wrangler d1 execute matrix-rain-quiz --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

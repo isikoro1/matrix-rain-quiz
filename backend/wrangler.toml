@@ -1,0 +1,8 @@
+name = "matrix-rain-quiz-api"
+main = "src/index.js"
+compatibility_date = "2026-06-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "matrix-rain-quiz"
+database_id = "replace-with-cloudflare-d1-database-id"
